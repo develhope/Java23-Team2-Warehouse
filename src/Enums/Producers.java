@@ -1,6 +1,6 @@
 package Enums;
 
-public enum Productors {    NOKIA,
+public enum Producers {    NOKIA,
     APPLE,
     SAMSUNG,
     ALIENWARE

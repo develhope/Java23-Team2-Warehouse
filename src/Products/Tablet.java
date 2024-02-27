@@ -2,11 +2,11 @@ package Products;
 
 import Enums.KindOfProduct;
 import Enums.Models;
-import Enums.Productors;
+import Enums.Producers;
 
 public class Tablet extends Product {
 
-    public Tablet(Productors produttore, Models modello, double display, double memoria, double acquistoPrezzo, double venditaPrezzo, String descrizione, String id) {
+    public Tablet(Producers produttore, Models modello, double display, double memoria, double acquistoPrezzo, double venditaPrezzo, String descrizione, String id) {
         super(KindOfProduct.TABLET, produttore, modello, display, memoria, acquistoPrezzo, venditaPrezzo, descrizione, id = "T");
         switch (produttore) {
             case NOKIA -> {

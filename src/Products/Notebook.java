@@ -2,11 +2,11 @@ package Products;
 
 import Enums.KindOfProduct;
 import Enums.Models;
-import Enums.Productors;
+import Enums.Producers;
 
 public class Notebook extends Product {
-    public Notebook(Productors produttore, Models modello, double display, double memoria, double acquistoPrezzo, double venditaPrezzo, String descrizione, String id) {
-        super(KindOfProduct.SMARTPHONE, produttore, modello, display, memoria, acquistoPrezzo, venditaPrezzo, descrizione, id = "N");
+    public Notebook(Producers produttore, Models modello, double display, double memoria, double acquistoPrezzo, double venditaPrezzo, String descrizione, String id) {
+        super(KindOfProduct.NOTEBOOK, produttore, modello, display, memoria, acquistoPrezzo, venditaPrezzo, descrizione, id = "N");
         switch (produttore) {
             case NOKIA -> {
                 this.id = id.concat("01");

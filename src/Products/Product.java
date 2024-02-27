@@ -2,7 +2,7 @@ package Products;
 
 import Enums.KindOfProduct;
 import Enums.Models;
-import Enums.Productors;
+import Enums.Producers;
 
 public class Product {
 
@@ -21,7 +21,7 @@ public class Product {
     protected String descrizione;
 
 
-    public Product(KindOfProduct tipo, Productors produttore, Models modello, double display, double memoria, double acquistoPrezzo, double venditaPrezzo, String descrizione, String id) {
+    public Product(KindOfProduct tipo, Producers produttore, Models modello, double display, double memoria, double acquistoPrezzo, double venditaPrezzo, String descrizione, String id) {
         this.tipo= tipo.name();
         this.produttore = produttore.name();
         this.modello = modello.name();
@@ -37,7 +37,7 @@ public class Product {
     public String getDescription() {
 
         return "Questo " + tipo + " " + produttore+ " " + modello + " ha uno schermo di " + display + "\" e una memoria di " + memoria + " GB." + descrizione + "\n \n" +
-                "Prezzo di acquisto: " + acquistoPrezzo + " €\nPrezzo di vendita: " + venditaPrezzo + "€ \n \n" + id;
+                "Prezzo di acquisto: " + acquistoPrezzo + " €\nPrezzo di vendita: " + venditaPrezzo + " € \n \n" + id;
     }
 }
 
