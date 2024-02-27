@@ -29,7 +29,7 @@ public class Product {
         this.memoria = memoria;
         this.id = id;
         this.acquistoPrezzo = acquistoPrezzo;
-        this.venditaPrezzo = venditaPrezzo;
+        this.venditaPrezzo= (this.acquistoPrezzo*1.30)*1.22;
         this.descrizione = descrizione;
 
     }
