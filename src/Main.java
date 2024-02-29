@@ -1,23 +1,21 @@
-import Enums.Models;
-import Enums.Producers;
-import Products.Notebook;
-import Products.Smartphone;
-import Products.Tablet;
+import enums.KindOfProduct;
+import enums.Models;
+import enums.Producers;
+import products.Product;
 
 public class Main {
 
     public static void main(String[] args) {
-        Tablet tablet= new Tablet(Producers.SAMSUNG, Models.S7,15,50,225, 0,"","");
-        Smartphone cell = new Smartphone(Producers.APPLE, Models.IPHONE30,15,50,150,0,"","");
-        Notebook pc = new Notebook(Producers.ALIENWARE, Models.M15,15,50,1700,0,"","");
-        System.out.println(tablet.getDescription());
-        System.out.println();
-        System.out.println();
-        System.out.println(cell.getDescription());
-        System.out.println();
-        System.out.println();
-        System.out.println(pc.getDescription());
+        Product tablet = new Product(KindOfProduct.TABLET, Producers.APPLE, Models.IPAD10,"00000","",12,45,2424,124124);
+        Product smartphone = new Product(KindOfProduct.NOTEBOOK, Producers.ALIENWARE, Models.GALAXY20,"00000","",12,45,2424,124124);
+        Product notebook = new Product(KindOfProduct.SMARTPHONE, Producers.SAMSUNG, Models.M18,"00000","",12,45,2424,124124);
+        System.out.println (tablet);
+        System.out.println ();
+        System.out.println ();
+        System.out.println (smartphone);
+        System.out.println ();
+        System.out.println ();
+        System.out.println (notebook);
     }
 
 }
-
