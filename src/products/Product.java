@@ -1,102 +1,94 @@
 package products;
 
-import enums.KindOfProduct;
-import enums.Models;
-import enums.Producers;
 
 public class Product {
 
-    private KindOfProduct article;
+    private String article;
+    private String producer;
+    private String model;
+    private String id;
+    private String description;
+    private double display;
+    private double storage;
+    private double purchasePrice;
+    private double sellPrice;
 
-    public KindOfProduct getArticle() {
-        return article;
-    }
 
-    public void setArticle(KindOfProduct article) {
+    public void setArticle(String article) {
         this.article = article;
     }
 
-    private Producers producer;
-
-    public Producers getProducer() {
-        return producer;
-    }
-
-    public void setProducer(Producers producer) {
+    public void setProducer(String producer) {
         this.producer = producer;
     }
 
-    private Models model;
-
-    public Models getModel() {
-        return model;
-    }
-
-    public void setModel(Models model) {
+    public void setModel(String model) {
         this.model = model;
-    }
-
-    private String id;
-
-    public String getId() {
-        return id;
     }
 
     public void setId(String id) {
         this.id = id;
     }
 
-    private String description;
-
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setDisplay(double display) {
+        this.display = display;
+    }
+
+    public void setStorage(double storage) {
+        this.storage = storage;
+    }
+
+    public void setPurchasePrice(double purchasePrice) {
+        this.purchasePrice = purchasePrice;
+    }
+
+    public void setSellPrice(double sellPrice) {
+        this.sellPrice = sellPrice;
+    }
+
+
+    public String getArticle() {
+        return article;
+    }
+
+    public String getProducer() {
+        return producer;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getDescription() {
         return description;
     }
 
-    private double display;
-
-    public void setDisplay(double display) {
-        this.display = display;
-    }
-
     public double getDisplay() {
         return display;
-    }
-
-    private double storage;
-
-    public void setStorage(double storage) {
-        this.storage = storage;
     }
 
     public double getStorage() {
         return storage;
     }
 
-    private double purchasePrice;
-
-    public void setPurchasePrice(double purchasePrice) {
-        this.purchasePrice = purchasePrice;
-    }
-
     public double getPurchasePrice() {
         return purchasePrice;
-    }
-
-    private double sellPrice;
-
-    public void setSellPrice(double sellPrice) {
-        this.sellPrice = sellPrice;
     }
 
     public double getSellPrice() {
         return sellPrice;
     }
 
-    public Product(KindOfProduct article, Producers producer, Models model, String id, String description, double display, double storage, double purchasePrice, double sellPrice) {
+
+    public Product(String article, String producer, String model, String description, String id, double display, double storage, double purchasePrice, double sellPrice) {
         this.article = article;
         this.producer = producer;
         this.model = model;
@@ -107,6 +99,7 @@ public class Product {
         this.purchasePrice = purchasePrice;
         this.sellPrice = sellPrice;
     }
+
 
     @Override
     public String toString() {
@@ -115,10 +108,10 @@ public class Product {
                 "Producer= " + producer + '\n' +
                 "Model= " + model + '\n' +
                 "ID= " + id + '\n' +
-                "Display= " + display + "\n" +
-                "Storage memory= " + storage + "\n" +
-                "Purchase price= " + purchasePrice + "\n" +
-                "Selling price = " + sellPrice + "\n" +
+                "Display= " + display + "\"\n" +
+                "Storage memory= " + storage + " GB\n" +
+                "Purchase price= " + purchasePrice + " €\n" +
+                "Selling price = " + sellPrice + " €\n" +
                 "Description = " + description;
     }
 
