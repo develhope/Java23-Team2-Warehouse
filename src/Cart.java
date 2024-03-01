@@ -1,14 +1,16 @@
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Cart {
-    private final ArrayList<Product> products = new ArrayList<>();
+    private final Set<Product> products = new HashSet<Product>();
     private Double totalPrice;
 
     public Cart(ArrayList<Product> products) {
     }
 
-    public ArrayList<Product> getProducts() {
-        return products;
+    public Set<Product> getProducts() {
+        return products;giit
     }
 
     public Double getTotalPrice() {
