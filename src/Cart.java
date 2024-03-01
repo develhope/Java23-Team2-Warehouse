@@ -23,7 +23,20 @@ public class Cart {
 
     @Override
     public String toString() {
-        return "In to the cart we have [" + "products = " + products + ", for a totalPrice=" + totalPrice + "]";
+
+        return "In to the cart we have: [" + "products = " + products + ", for a totalPrice=" + totalPrice + "]";
+    }
+
+    public void printProductsInCart() {
+        if (products.isEmpty()) {
+            return;
+        }
+        System.out.println("In to the cart we have: ");
+        int i = 1;
+        for (Product a : products) {
+            System.out.println(i + " : " + a);
+            i++;
+        }
     }
 
     public void emptyCart() {
