@@ -10,7 +10,7 @@ public class Cart {
     }
 
     public Set<Product> getProducts() {
-        return products;giit
+        return products;
     }
 
     public Double getTotalPrice() {
