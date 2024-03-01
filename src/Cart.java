@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
 public class Cart {
-    private final ArrayList<Products> products = new ArrayList<>();
+    private final ArrayList<Product> products = new ArrayList<>();
     private Double totalPrice;
 
-    public Cart(ArrayList<Products> products) {
+    public Cart(ArrayList<Product> products) {
     }
 
-    public ArrayList<Products> getProducts() {
+    public ArrayList<Product> getProducts() {
         return products;
     }
 
@@ -15,27 +15,24 @@ public class Cart {
         return totalPrice * 1.22;
     }
 
-    public void setTotalPrice() {
-
+    private void setTotalPrice() {
+// Qui si settera il prezzo totale in base alla quantità di prodotti aggiunti al carrello.
     }
 
     @Override
     public String toString() {
-        return "In to the cart we have [" +
-                "products = " + products +
-                ", for a totalPrice=" + totalPrice +
-                "]";
+        return "In to the cart we have [" + "products = " + products + ", for a totalPrice=" + totalPrice + "]";
     }
 
     public void emptyCart() {
         products.clear();
     }
 
-    public void removeProduc(int index) {
+    public void removeFromCart(int index) {
         products.remove(index);
     }
 
-    public void addProduct(Products product) {
+    public void addToCart(Product product) {
         products.add(product);
     }
 
