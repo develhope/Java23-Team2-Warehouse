@@ -3,7 +3,7 @@ package products;
 
 public class Product {
 
-    private String article;
+    private kindOfProduct article;
     private String producer;
     private String model;
     private String id;
@@ -14,7 +14,7 @@ public class Product {
     private double sellPrice;
 
 
-    public void setArticle(String article) {
+    public void setArticle(kindOfProduct article) {
         this.article = article;
     }
 
@@ -52,7 +52,7 @@ public class Product {
 
 
     public String getArticle() {
-        return article;
+        return article.name();
     }
 
     public String getProducer() {
@@ -88,7 +88,7 @@ public class Product {
     }
 
 
-    public Product(String article, String producer, String model, String description, String id, double display, double storage, double purchasePrice, double sellPrice) {
+    public Product(kindOfProduct article, String producer, String model, String description, String id, double display, double storage, double purchasePrice, double sellPrice) {
         this.article = article;
         this.producer = producer;
         this.model = model;
@@ -104,7 +104,7 @@ public class Product {
     @Override
     public String toString() {
         return "Product:" + "\n" +
-                "Article= " + article + "\n" +
+                "Article= " + article.name() + "\n" +
                 "Producer= " + producer + '\n' +
                 "Model= " + model + '\n' +
                 "ID= " + id + '\n' +
