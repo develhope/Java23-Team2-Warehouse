@@ -1,9 +1,8 @@
-package products;
-
-
+package classes;
+import products.KindOfProduct;
 public class Product {
 
-    private kindOfProduct article;
+    private KindOfProduct article;
     private String producer;
     private String model;
     private String id;
@@ -15,7 +14,7 @@ public class Product {
     private int quantity;
 
 
-    public void setArticle(kindOfProduct article) {
+    public void setArticle(KindOfProduct article) {
         this.article = article;
     }
 
@@ -95,7 +94,7 @@ public class Product {
         return quantity;
     }
 
-    public Product(kindOfProduct article, String producer, String model, String description, String id, double display, double storage, double purchasePrice, double sellPrice, int quantity) {
+    public Product(KindOfProduct article, String producer, String model, String description, String id, double display, double storage, double purchasePrice, double sellPrice, int quantity) {
         this.article = article;
         this.producer = producer;
         this.model = model;
@@ -111,7 +110,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product:" + "\n" +
+        return "classes.Product:" + "\n" +
                 "Article= " + article.name() + "\n" +
                 "Producer= " + producer + '\n' +
                 "Model= " + model + '\n' +

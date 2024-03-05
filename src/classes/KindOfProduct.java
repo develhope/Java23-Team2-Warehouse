@@ -1,6 +1,6 @@
 package products;
 
-public enum kindOfProduct {
+public enum KindOfProduct {
     TABLET,
     SMARTPHONE,
     NOTEBOOK

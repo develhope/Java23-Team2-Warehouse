@@ -1,8 +1,8 @@
+package classes;
+
 import classes.Product;
 
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Objects;
 import java.util.Set;
 
 public class Cart {
@@ -20,8 +20,15 @@ public class Cart {
         return totalPrice;
     }
 
-    private void setTotalPrice() {
-// Qui si settera il prezzo totale in base alla quantità di prodotti aggiunti al carrello.
+    private void updateTotalPrice() {
+        double total = 0;
+        for (Product a : products) {
+            if (a.getSellPrice() <= 0) {
+                System.out.println("Price cannot be negative, check the articles values");
+                return;
+            }
+            total += a.getSellPrice();
+        }
     }
 
     @Override
@@ -31,7 +38,7 @@ public class Cart {
 
     public void printProductsInCart() {
         if (products.isEmpty()) {
-            System.out.println("Cart is empty");
+            System.out.println("classes.Cart is empty");
             return;
         }
         System.out.println("In to the cart we have: ");
@@ -48,10 +55,12 @@ public class Cart {
 
     public void removeFromCart(Product product) {
         products.remove(product);
+        updateTotalPrice();
     }
 
     public void addToCart(Product product) {
         products.add(product);
+        updateTotalPrice();
     }
 
 }
