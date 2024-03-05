@@ -12,6 +12,7 @@ public class Product {
     private double storage;
     private double purchasePrice;
     private double sellPrice;
+    private int quantity;
 
 
     public void setArticle(kindOfProduct article) {
@@ -50,6 +51,9 @@ public class Product {
         this.sellPrice = sellPrice;
     }
 
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public String getArticle() {
         return article.name();
@@ -87,8 +91,11 @@ public class Product {
         return sellPrice;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
 
-    public Product(kindOfProduct article, String producer, String model, String description, String id, double display, double storage, double purchasePrice, double sellPrice) {
+    public Product(kindOfProduct article, String producer, String model, String description, String id, double display, double storage, double purchasePrice, double sellPrice, int quantity) {
         this.article = article;
         this.producer = producer;
         this.model = model;
@@ -98,6 +105,7 @@ public class Product {
         this.storage = storage;
         this.purchasePrice = purchasePrice;
         this.sellPrice = sellPrice;
+        this.quantity = quantity;
     }
 
 
