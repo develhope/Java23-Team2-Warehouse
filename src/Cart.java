@@ -17,7 +17,7 @@ public class Cart {
     }
 
     public Double getTotalPrice() {
-        return totalPrice * 1.22;
+        return totalPrice;
     }
 
     private void setTotalPrice() {
@@ -47,17 +47,7 @@ public class Cart {
     }
 
     public void removeFromCart(Product product) {
-        for (int i = 0; i < products.size(); i++) {
-            Iterator iterator = products.iterator();
-            while (iterator.hasNext()) {
-                Object prod = iterator.next();
-                if (prod.equals(product)) {
-                    iterator.remove();
-                }
-
-            }
-
-        }
+        products.remove(product);
     }
 
     public void addToCart(Product product) {
