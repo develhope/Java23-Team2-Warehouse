@@ -1,18 +1,16 @@
 package classes;
 
-import classes.Product;
-
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Cart {
-    private final Set<Product> products = new HashSet<Product>();
+    private final Map<Product, Integer> products = new HashMap<>();
     private Double totalPrice;
 
     public Cart() {
     }
 
-    public Set<Product> getProducts() {
+    public Map<Product, Integer> getProducts() {
         return products;
     }
 
@@ -22,12 +20,12 @@ public class Cart {
 
     private void updateTotalPrice() {
         double total = 0;
-        for (Product a : products) {
-            if (a.getSellPrice() <= 0) {
-                System.out.println("Price cannot be negative, check the articles values");
+        for (Map.Entry<Product, Integer> a : products.entrySet()) {
+            if (a.getKey().getSellPrice() <= 0) {
+                System.out.println("Price cannot be negative, check the articles selling price");
                 return;
             }
-            total += a.getSellPrice();
+            total += a.getKey().getSellPrice() * a.getValue();
         }
     }
 
@@ -38,14 +36,12 @@ public class Cart {
 
     public void printProductsInCart() {
         if (products.isEmpty()) {
-            System.out.println("classes.Cart is empty");
+            System.out.println("Il carrello è vuoto");
             return;
         }
-        System.out.println("In to the cart we have: ");
-        int i = 0;
-        for (Product a : products) {
-            System.out.println(i + ") " + a + "/n");
-            i++;
+        System.out.println("Nel carrello abbiamo: ");
+        for (Map.Entry<Product, Integer> a : products.entrySet()) {
+            System.out.println("   - n\u00B0" + a.getValue() + " " + a.getKey());
         }
     }
 
@@ -53,13 +49,27 @@ public class Cart {
         products.clear();
     }
 
-    public void removeFromCart(Product product) {
-        products.remove(product);
+    public void removeFromCart(Product product, int quantity) {
+        if (products.isEmpty()) {
+            System.out.println("Il carrello è vuoto");
+            return;
+        }
+        if (products.get(product) == null) {
+            System.out.println("Prodotto non presente nel carrello");
+            return;
+        }
+
+        if (products.get(product) <= quantity) {
+            products.remove(product);
+        } else if (products.get(product) > quantity) {
+            Integer temp = products.get(product) - quantity;
+            products.put(product, temp);
+        }
         updateTotalPrice();
     }
 
-    public void addToCart(Product product) {
-        products.add(product);
+    public void addToCart(Product product, int quantity) {
+        products.put(product, quantity);
         updateTotalPrice();
     }
 
