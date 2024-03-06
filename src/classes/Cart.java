@@ -5,9 +5,10 @@ import java.util.HashMap;
 
 public class Cart {
     private final Map<Product, Integer> products = new HashMap<>();
-    private Double totalPrice;
+    private double totalPrice;
 
     public Cart() {
+        totalPrice = 0;
     }
 
     public Map<Product, Integer> getProducts() {
@@ -22,10 +23,10 @@ public class Cart {
         double total = 0;
         for (Map.Entry<Product, Integer> a : products.entrySet()) {
             if (a.getKey().getSellPrice() <= 0) {
-                System.out.println("Price cannot be negative, check the articles selling price");
                 return;
             }
             total += a.getKey().getSellPrice() * a.getValue();
+            totalPrice = total;
         }
     }
 
@@ -43,6 +44,7 @@ public class Cart {
         for (Map.Entry<Product, Integer> a : products.entrySet()) {
             System.out.println("   - n\u00B0" + a.getValue() + " " + a.getKey());
         }
+        System.out.println("Per un totale di spesa di: " + totalPrice);
     }
 
     public void emptyCart() {
@@ -61,9 +63,11 @@ public class Cart {
 
         if (products.get(product) <= quantity) {
             products.remove(product);
+            System.out.println("Prodotto rimosso dal carrello");
         } else if (products.get(product) > quantity) {
             Integer temp = products.get(product) - quantity;
             products.put(product, temp);
+            System.out.println("Quantità nel carrello aggiornata");
         }
         updateTotalPrice();
     }

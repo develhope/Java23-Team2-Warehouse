@@ -12,7 +12,8 @@ public class Main {
         cartTest.removeFromCart(product, 2);
         cartTest.printProductsInCart();
         cartTest.removeFromCart(product2, 3);
-        cartTest.removeFromCart(product, 3);
+        cartTest.removeFromCart(product, 2);
+        cartTest.removeFromCart(product, 2);
         cartTest.printProductsInCart();
 
     }
