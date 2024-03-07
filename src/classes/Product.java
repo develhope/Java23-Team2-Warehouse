@@ -11,7 +11,6 @@ public class Product {
     private double storage;
     private double purchasePrice;
     private double sellPrice;
-    private int quantity;
 
 
     public void setArticle(KindOfProduct article) {
@@ -50,10 +49,6 @@ public class Product {
         this.sellPrice = sellPrice;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
     public String getArticle() {
         return article.name();
     }
@@ -90,10 +85,6 @@ public class Product {
         return sellPrice;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
     public Product(KindOfProduct article, String producer, String model, String description, String id, double display, double storage, double purchasePrice, double sellPrice, int quantity) {
         this.article = article;
         this.producer = producer;
@@ -104,12 +95,10 @@ public class Product {
         this.storage = storage;
         this.purchasePrice = purchasePrice;
         this.sellPrice = sellPrice;
-        this.quantity = quantity;
     }
 
 
-    @Override
-    public String toString() {
+    public String toStringExtended() {
         return "classes.Product:" + "\n" +
                 "Article= " + article.name() + "\n" +
                 "Producer= " + producer + '\n' +
@@ -122,6 +111,13 @@ public class Product {
                 "Description = " + description;
     }
 
+    @Override
+    public String toString() {
+        return article +
+                " Produttore: '" + producer + '\'' +
+                ", Modello: " + model + '\'' +
+                ", Prezzo: " + sellPrice;
+    }
 }
 
 
