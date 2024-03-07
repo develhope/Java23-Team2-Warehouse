@@ -49,14 +49,23 @@ public class Warehouse {
         }
     }
 
-    public void scnProdConstructor() {
+    // Permette all'utente di inserire un prodotto a magazzino tramite un interfaccia da Terminale.
+    public void scannerProdConstructor() {
         products.KindOfProduct article = products.KindOfProduct.SMARTPHONE;
         String producer, model, id, description;
         double display, storage, purchasePrice, sellPrice;
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Che tipo di prodotto vuoi aggiungere?\n" +
-                "1. Notebook, 2. Tablet, 3. Smartphone");
-        int intChoice = scanner.nextInt();
+        int intChoice = 0;
+        do {
+            System.out.println("Che tipo di prodotto vuoi aggiungere (usa i numeri)?\n" +
+                    "1. Notebook, 2. Tablet, 3. Smartphone");
+            while (!scanner.hasNextInt()) {
+                scanner.nextLine();
+                System.out.println("Che tipo di prodotto vuoi aggiungere (usa i numeri)?\n" +
+                        "1. Notebook, 2. Tablet, 3. Smartphone");
+            }
+            intChoice = scanner.nextInt();
+        } while (intChoice < 1 || intChoice > 3);
         switch (intChoice) {
             case 1:
                 article = products.KindOfProduct.NOTEBOOK;
@@ -68,8 +77,9 @@ public class Warehouse {
                 article = products.KindOfProduct.SMARTPHONE;
                 break;
             default:
-                System.out.println("Scelta errata, reinizializzare la creazione.");
+                return;
         }
+        scanner.nextLine();
         System.out.println("Produttore:");
         producer = scanner.nextLine();
         System.out.println("Modello:");

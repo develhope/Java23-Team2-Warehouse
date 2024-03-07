@@ -17,7 +17,7 @@ public class Main {
         cartTest.removeFromCart(product, 2);
         cartTest.printProductsInCart();
         Warehouse warehouse = new Warehouse();
-        warehouse.scnProdConstructor();
+        warehouse.scannerProdConstructor();
         warehouse.printStock();
 
 
