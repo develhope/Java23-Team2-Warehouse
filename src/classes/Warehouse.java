@@ -2,6 +2,7 @@ package classes;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Warehouse {
     private Map<Product, Integer> stock;
@@ -46,6 +47,59 @@ public class Warehouse {
         for (Map.Entry<Product, Integer> entry : stock.entrySet()) {
             System.out.println("Prodotto: " + entry.getKey() + ", Quantità: " + entry.getValue());
         }
+    }
+
+    // Permette all'utente di inserire un prodotto a magazzino tramite un interfaccia da Terminale.
+    public void scannerProdConstructor() {
+        products.KindOfProduct article = products.KindOfProduct.SMARTPHONE;
+        String producer, model, id, description;
+        double display, storage, purchasePrice, sellPrice;
+        Scanner scanner = new Scanner(System.in);
+        int intChoice = 0;
+        do {
+            System.out.println("Che tipo di prodotto vuoi aggiungere (usa i numeri)?\n" +
+                    "1. Notebook, 2. Tablet, 3. Smartphone");
+            while (!scanner.hasNextInt()) {
+                scanner.nextLine();
+                System.out.println("Che tipo di prodotto vuoi aggiungere (usa i numeri)?\n" +
+                        "1. Notebook, 2. Tablet, 3. Smartphone");
+            }
+            intChoice = scanner.nextInt();
+        } while (intChoice < 1 || intChoice > 3);
+        switch (intChoice) {
+            case 1:
+                article = products.KindOfProduct.NOTEBOOK;
+                break;
+            case 2:
+                article = products.KindOfProduct.TABLET;
+                break;
+            case 3:
+                article = products.KindOfProduct.SMARTPHONE;
+                break;
+            default:
+                return;
+        }
+        scanner.nextLine();
+        System.out.println("Produttore:");
+        producer = scanner.nextLine();
+        System.out.println("Modello:");
+        model = scanner.nextLine();
+        System.out.println("Id:");
+        id = scanner.nextLine();
+        System.out.println("Descrizione:");
+        description = scanner.nextLine();
+        System.out.println("Dimensione display (in numeri):");
+        display = scanner.nextDouble();
+        System.out.println("Taglia di memoria (in numeri):");
+        storage = scanner.nextDouble();
+        System.out.println("Prezzo di acquisto (in numeri):");
+        purchasePrice = scanner.nextDouble();
+        System.out.println("Prezzo di vendita (in numeri):");
+        sellPrice = scanner.nextDouble();
+        System.out.println("Quantità da aggiungere in magazzino (in numeri):");
+        int quantity = scanner.nextInt();
+        Product scnProd = new Product(article, producer, model, description, id, display, storage, purchasePrice, sellPrice);
+        stock.put(scnProd, quantity);
     }
 }
 
