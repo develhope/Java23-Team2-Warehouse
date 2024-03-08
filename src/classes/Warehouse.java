@@ -50,22 +50,24 @@ public class Warehouse {
     }
 
     // Permette all'utente di inserire un prodotto a magazzino tramite un interfaccia da Terminale.
-    public void scannerProdConstructor() {
-        products.KindOfProduct article = products.KindOfProduct.SMARTPHONE;
-        String producer, model, id, description;
-        double display, storage, purchasePrice, sellPrice;
+    public void scnAddProdToWarehouse() {
         Scanner scanner = new Scanner(System.in);
-        int intChoice = 0;
+        String input;
+        int intChoice;
         do {
             System.out.println("Che tipo di prodotto vuoi aggiungere (usa i numeri)?\n" +
-                    "1. Notebook, 2. Tablet, 3. Smartphone");
-            while (!scanner.hasNextInt()) {
-                scanner.nextLine();
-                System.out.println("Che tipo di prodotto vuoi aggiungere (usa i numeri)?\n" +
-                        "1. Notebook, 2. Tablet, 3. Smartphone");
+                    "1. Notebook, 2. Tablet, 3. Smartphone, w. Torna alla scehrmata precedente");
+            input = scanner.nextLine();
+            if (input.equalsIgnoreCase("w")) {
+                return;
             }
-            intChoice = scanner.nextInt();
+            while (!input.matches("[1-3]")) {
+                System.out.println("Usa i numeri per effettuare la scelta o 'w' per tornare alla schermata precedente\n");
+                input = scanner.nextLine();
+            }
+            intChoice = Integer.parseInt(input);
         } while (intChoice < 1 || intChoice > 3);
+        products.KindOfProduct article;
         switch (intChoice) {
             case 1:
                 article = products.KindOfProduct.NOTEBOOK;
@@ -79,27 +81,61 @@ public class Warehouse {
             default:
                 return;
         }
-        scanner.nextLine();
         System.out.println("Produttore:");
-        producer = scanner.nextLine();
+        String producer = scanner.nextLine();
         System.out.println("Modello:");
-        model = scanner.nextLine();
+        String model = scanner.nextLine();
         System.out.println("Id:");
-        id = scanner.nextLine();
+        String id = scanner.nextLine();
         System.out.println("Descrizione:");
-        description = scanner.nextLine();
+        String description = scanner.nextLine();
         System.out.println("Dimensione display (in numeri):");
-        display = scanner.nextDouble();
+        double display = Double.parseDouble(scanner.nextLine());
         System.out.println("Taglia di memoria (in numeri):");
-        storage = scanner.nextDouble();
+        double storage = Double.parseDouble(scanner.nextLine());
         System.out.println("Prezzo di acquisto (in numeri):");
-        purchasePrice = scanner.nextDouble();
+        double purchasePrice = Double.parseDouble(scanner.nextLine());
         System.out.println("Prezzo di vendita (in numeri):");
-        sellPrice = scanner.nextDouble();
+        double sellPrice = Double.parseDouble(scanner.nextLine());
         System.out.println("Quantità da aggiungere in magazzino (in numeri):");
-        int quantity = scanner.nextInt();
-        Product scnProd = new Product(article, producer, model, description, id, display, storage, purchasePrice, sellPrice);
-        stock.put(scnProd, quantity);
+        int quantity = Integer.parseInt(scanner.nextLine());
+        addProduct(new Product(article, producer, model, description, id, display, storage, purchasePrice, sellPrice), quantity);
+    }
+
+    //È un metodo che resta in ascolto e ripropone la possibilità di scelte fino a che non è inserita Q
+    public void scnHome() {
+        Scanner scanner = new Scanner(System.in);
+        String input;
+        do {
+            int intChoice;
+            do {
+                System.out.println("\nChe operazione desideri effettuare:\n" +
+                        "1. Stampare i prodotti a magazzino\n" +
+                        "2. Aggiungere un prodotto al magazzino\n" +
+                        // Qui si possono aggiungere le varie scelte mano a mano che vengono sviluppate
+                        "q. Esci dal programma");
+                input = scanner.nextLine();
+                if (input.equalsIgnoreCase("q")) {
+                    return;
+                }
+                //Il registro del while va aggiornato facendo si che includa i numeri delle nuove scelte
+                while (!input.matches("[1-2]")) {
+                    System.out.println("\nInserisci un numero tra 1 e 2 o 'q' per uscire.");
+                    input = scanner.nextLine();
+                }
+                intChoice = Integer.parseInt(input);
+                //Anche qui sotto
+            } while (intChoice < 1 || intChoice > 2);
+            // Allo Switch va aggiunta la gestione dell'aggiunta.
+            switch (intChoice) {
+                case 1:
+                    printStock();
+                    break;
+                case 2:
+                    scnAddProdToWarehouse();
+                    break;
+            }
+        } while (!input.equalsIgnoreCase("q"));
     }
 }
 
