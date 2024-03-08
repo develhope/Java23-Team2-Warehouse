@@ -1,4 +1,5 @@
 package classes;
+
 import products.KindOfProduct;
 
 import java.util.Objects;
@@ -28,9 +29,6 @@ public class Product {
         this.model = model;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public void setDescription(String description) {
         this.description = description;
@@ -121,7 +119,6 @@ public class Product {
                 ", Modello: " + model + '\'' +
                 ", Prezzo: " + sellPrice;
     }
-
 
 
     @Override
