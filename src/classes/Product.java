@@ -1,11 +1,15 @@
 package classes;
+
 import products.KindOfProduct;
+
+import java.util.Objects;
+
 public class Product {
 
     private KindOfProduct article;
     private String producer;
     private String model;
-    private String id;
+    private int id;
     private String description;
     private double display;
     private double storage;
@@ -25,9 +29,6 @@ public class Product {
         this.model = model;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public void setDescription(String description) {
         this.description = description;
@@ -61,7 +62,7 @@ public class Product {
         return model;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -85,11 +86,13 @@ public class Product {
         return sellPrice;
     }
 
-    public Product(KindOfProduct article, String producer, String model, String description, String id, double display, double storage, double purchasePrice, double sellPrice) {
+
+    public Product(KindOfProduct article, String producer, String model, String description, double display, double storage, double purchasePrice, double sellPrice) {
+
         this.article = article;
         this.producer = producer;
         this.model = model;
-        this.id = id;
+        this.id = hashCode();
         this.description = description;
         this.display = display;
         this.storage = storage;
@@ -117,6 +120,12 @@ public class Product {
                 " Produttore: '" + producer + '\'' +
                 ", Modello: " + model + '\'' +
                 ", Prezzo: " + sellPrice;
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(article, producer, model);
     }
 }
 
