@@ -7,6 +7,7 @@ public class Cart {
     private final Map<Product, Integer> products = new HashMap<>();
     private double totalPrice;
 
+
     public Cart() {
         totalPrice = 0;
     }
@@ -75,6 +76,18 @@ public class Cart {
     public void addToCart(Product product, int quantity) {
         products.put(product, quantity);
         updateTotalPrice();
+    }
+
+    public void addToCart(Product product, int quantity, Warehouse warehouse) {
+        int availableQuantity = warehouse.checkStock(product);
+        // Controlla se la quantità richiesta è disponibile nel magazzino
+        if (availableQuantity >= quantity) {
+            products.put(product, quantity);
+            updateTotalPrice();
+            System.out.println("Prodotto aggiunto al carrello");
+        } else {
+            System.out.println("Prodotto non disponibile in quantità sufficiente nel magazzino");
+        }
     }
 
 }
