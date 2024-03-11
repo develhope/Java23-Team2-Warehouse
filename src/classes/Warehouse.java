@@ -85,8 +85,6 @@ public class Warehouse {
         String producer = scanner.nextLine();
         System.out.println("Modello:");
         String model = scanner.nextLine();
-        System.out.println("Id:");
-        String id = scanner.nextLine();
         System.out.println("Descrizione:");
         String description = scanner.nextLine();
         System.out.println("Dimensione display (in numeri):");
@@ -99,7 +97,7 @@ public class Warehouse {
         double sellPrice = Double.parseDouble(scanner.nextLine());
         System.out.println("Quantità da aggiungere in magazzino (in numeri):");
         int quantity = Integer.parseInt(scanner.nextLine());
-        addProduct(new Product(article, producer, model, description, id, display, storage, purchasePrice, sellPrice), quantity);
+        addProduct(new Product(article, producer, model, description, display, storage, purchasePrice, sellPrice), quantity);
     }
 
     //È un metodo che resta in ascolto e ripropone la possibilità di scelte fino a che non è inserita Q
