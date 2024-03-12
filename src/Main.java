@@ -10,6 +10,7 @@ public class Main {
         Warehouse warehouse = new Warehouse();
         warehouse.addProduct(new Product(KindOfProduct.NOTEBOOK, "Apple", "XR", "tr", 2.3, 2, 1000, 1250), 10);
         warehouse.addProduct(new Product(KindOfProduct.NOTEBOOK, "Apple", "XR", "tr", 2.3, 2, 1000, 1250), 8);
+        warehouse.createCart("Cart1");
         warehouse.scnHome();
     }
 

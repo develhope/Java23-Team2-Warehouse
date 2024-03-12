@@ -1,14 +1,17 @@
 package classes;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Warehouse {
     private Map<Product, Integer> stock;
+    private Map<String, Cart> carts;
 
     public Warehouse() {
         this.stock = new HashMap<>();
+        this.carts = new HashMap<>();
     }
 
     //Aggiunge una determinata quantità di un prodotto specificato al magazzino.
@@ -110,6 +113,8 @@ public class Warehouse {
                 System.out.println("\nChe operazione desideri effettuare:\n" +
                         "1. Stampare i prodotti a magazzino\n" +
                         "2. Aggiungere un prodotto al magazzino\n" +
+                        "3. Creare un carrello\n" +
+                        "4. Eliminare un Carrello\n" +
                         // Qui si possono aggiungere le varie scelte mano a mano che vengono sviluppate
                         "q. Esci dal programma");
                 input = scanner.nextLine();
@@ -117,13 +122,13 @@ public class Warehouse {
                     return;
                 }
                 //Il registro del while va aggiornato facendo si che includa i numeri delle nuove scelte
-                while (!input.matches("[1-2]")) {
-                    System.out.println("\nInserisci un numero tra 1 e 2 o 'q' per uscire.");
+                while (!input.matches("[1-4]")) {
+                    System.out.println("\nInserisci un numero tra 1 e 4 o 'q' per uscire.");
                     input = scanner.nextLine();
                 }
                 intChoice = Integer.parseInt(input);
                 //Anche qui sotto
-            } while (intChoice < 1 || intChoice > 2);
+            } while (intChoice < 1 || intChoice > 4);
             // Allo Switch va aggiunta la gestione dell'aggiunta.
             switch (intChoice) {
                 case 1:
@@ -132,8 +137,64 @@ public class Warehouse {
                 case 2:
                     scnAddProdToWarehouse();
                     break;
+                case 3:
+                    System.out.println("Che nome vuoi dare al carrello:");
+                    String name = scanner.nextLine();
+                    createCart(name);
+                    break;
+                case 4:
+                    scnRemoveCart();
             }
         } while (!input.equalsIgnoreCase("q"));
+    }
+
+    public void createCart(String name) {
+        if (carts.containsKey(name)) {
+            System.out.println("Nome già usato da un altro carrello, carrello non creato");
+            return;
+        }
+        carts.put(name, new Cart());
+    }
+
+    public void removeCart(String name) {
+        if (!carts.containsKey(name)) {
+            System.out.println("Nome del carrello errato");
+        }
+        carts.remove(name);
+    }
+
+    private void scnRemoveCart() {
+        if (carts.isEmpty()) {
+            System.out.print("Non è presente nessun carrello da eliminare.\n");
+            return;
+        }
+        ArrayList<String> cartsName = new ArrayList<>();
+
+        for (Map.Entry<String, Cart> element : carts.entrySet()) {
+            cartsName.add(element.getKey());
+        }
+        String toPrint = "";
+        for (int i = 0; i < cartsName.size(); i++) {
+            toPrint = toPrint.concat(i + ". " + cartsName.get(i) + " ");
+        }
+        int intChoice = -1;
+        do {
+            System.out.print("Seleziona il carrello che vorresti eliminare:\n" +
+                    toPrint + "\n" +
+                    "oppure 'w' per tornare indietro\n");
+            Scanner scanner = new Scanner(System.in);
+            String input = scanner.nextLine();
+            if (input.equalsIgnoreCase("w")) {
+                return;
+            }
+            while (!input.matches("[0-" + carts.size() + "]")) {
+                System.out.print("Seleziona il carrello che vorresti eliminare:\n");
+                input = scanner.nextLine();
+            }
+            intChoice = Integer.parseInt(input);
+        } while (intChoice < 0 || intChoice > carts.size());
+
+        carts.remove(cartsName.get(intChoice));
     }
 }
 
