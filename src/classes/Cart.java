@@ -20,11 +20,11 @@ public class Cart {
         return totalPrice;
     }
 
-    private void updateTotalPrice() {
+    private void updateTotalPrice() throws Exception {
         double total = 0;
         for (Map.Entry<Product, Integer> a : products.entrySet()) {
             if (a.getKey().getSellPrice() <= 0) {
-                return;
+                throw new Exception("Negative price value");
             }
             total += a.getKey().getSellPrice() * a.getValue();
             totalPrice = total;
@@ -52,7 +52,7 @@ public class Cart {
         products.clear();
     }
 
-    public void removeFromCart(Product product, int quantity) {
+    public void removeFromCart(Product product, int quantity) throws Exception {
         if (products.isEmpty()) {
             System.out.println("Il carrello è vuoto");
             return;
@@ -73,7 +73,7 @@ public class Cart {
         updateTotalPrice();
     }
 
-    public void addToCart(Product product, int quantity) {
+    public void addToCart(Product product, int quantity) throws Exception {
         products.put(product, quantity);
         updateTotalPrice();
     }
