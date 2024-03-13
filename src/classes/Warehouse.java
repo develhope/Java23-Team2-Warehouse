@@ -1,5 +1,7 @@
 package classes;
 
+import products.KindOfProduct;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,16 +72,16 @@ public class Warehouse {
             }
             intChoice = Integer.parseInt(input);
         } while (intChoice < 1 || intChoice > 3);
-        products.KindOfProduct article;
+        KindOfProduct article;
         switch (intChoice) {
             case 1:
-                article = products.KindOfProduct.NOTEBOOK;
+                article = KindOfProduct.NOTEBOOK;
                 break;
             case 2:
-                article = products.KindOfProduct.TABLET;
+                article = KindOfProduct.TABLET;
                 break;
             case 3:
-                article = products.KindOfProduct.SMARTPHONE;
+                article = KindOfProduct.SMARTPHONE;
                 break;
             default:
                 return;
@@ -115,6 +117,8 @@ public class Warehouse {
                         "2. Aggiungere un prodotto al magazzino\n" +
                         "3. Creare un carrello\n" +
                         "4. Eliminare un Carrello\n" +
+                        "5. Ricerca prodotto\n" +
+                        "6. Rimuovere un prodotto dal magazzino\n" +
                         // Qui si possono aggiungere le varie scelte mano a mano che vengono sviluppate
                         "q. Esci dal programma");
                 input = scanner.nextLine();
@@ -122,13 +126,13 @@ public class Warehouse {
                     return;
                 }
                 //Il registro del while va aggiornato facendo si che includa i numeri delle nuove scelte
-                while (!input.matches("[1-4]")) {
-                    System.out.println("\nInserisci un numero tra 1 e 4 o 'q' per uscire.");
+                while (!input.matches("[1-6]")) {
+                    System.out.println("\nInserisci un numero tra 1 e 5 o 'q' per uscire.");
                     input = scanner.nextLine();
                 }
                 intChoice = Integer.parseInt(input);
                 //Anche qui sotto
-            } while (intChoice < 1 || intChoice > 4);
+            } while (intChoice < 1 || intChoice > 6);
             // Allo Switch va aggiunta la gestione dell'aggiunta.
             switch (intChoice) {
                 case 1:
@@ -144,6 +148,14 @@ public class Warehouse {
                     break;
                 case 4:
                     scnRemoveCart();
+                    break;
+                case 5:
+                    scnResearch();
+                    break;
+                case 6:
+                    scnRemoveProdToWarehouse();
+                    break;
+
             }
         } while (!input.equalsIgnoreCase("q"));
     }
@@ -195,6 +207,144 @@ public class Warehouse {
         } while (intChoice < 0 || intChoice > carts.size());
 
         carts.remove(cartsName.get(intChoice));
+    }
+
+    public void scnResearch() {
+        Scanner scanner = new Scanner(System.in);
+        String input;
+        int inputDigit;
+        int intChoice;
+        do {
+            System.out.println("Seleziona il criterio di ricerca (usa i numeri):\n" +
+                    "1.Produttore   2.Modello    3.ID   e. Torna alla scehrmata precedente");
+            input = scanner.nextLine();
+            if (input.equalsIgnoreCase("e")) {
+                return;
+            }
+            while (!input.matches("[1-3]")) {
+                System.out.println("Usa i numeri per effettuare la scelta o 'e' per tornare alla schermata precedente\n");
+                input = scanner.nextLine();
+            }
+            intChoice = Integer.parseInt(input);
+        } while (intChoice < 1 || intChoice > 3);
+        switch (intChoice) {
+            case 1:
+                System.out.println("Seleziona il produttore che vuoi cercare:");
+                input = scanner.nextLine();
+                for (Product item : stock.keySet()) {
+                    if (input.equalsIgnoreCase(item.getProducer())) {
+                        System.out.println(item.toStringExtended() + "\nQuantity: " + stock.get(item));
+                        System.out.println();
+                    }
+                }
+                break;
+            case 2:
+                System.out.println("Seleziona il modello che vuoi cercare:");
+                input = scanner.nextLine();
+                for (Product item : stock.keySet()) {
+                    if (input.equalsIgnoreCase(item.getModel())) {
+                        System.out.println(item.toStringExtended() + "\nQuantity: " + stock.get(item));
+                        System.out.println();
+                    }
+                }
+                break;
+            case 3:
+                System.out.println("Seleziona l'ID del prodotto che vuoi cercare:");
+                inputDigit = scanner.nextInt();
+                for (Product item : stock.keySet()) {
+                    if (inputDigit == item.getId()) {
+                        System.out.println(item.toStringExtended() + "\nQuantity: " + stock.get(item));
+                        System.out.println();
+                    }
+                }
+                break;
+        }
+    }
+
+    public void scnRemoveProdToWarehouse() {
+        Scanner scanner = new Scanner(System.in);
+        String input;
+        int inputDigit;
+        int intChoice;
+        Map<Product, Integer> filteredStock = new HashMap<>();
+        do {
+            System.out.println("Seleziona il criterio di ricerca del prodotto che vuoi rimuovere (usa i numeri):\n" +
+                    "1.Produttore   2.Modello    3.ID   r. Torna alla scehrmata precedente");
+            input = scanner.nextLine();
+            if (input.equalsIgnoreCase("r")) {
+                return;
+            }
+            while (!input.matches("[1-3]")) {
+                System.out.println("Usa i numeri per effettuare la scelta o 'r' per tornare alla schermata precedente\n");
+                input = scanner.nextLine();
+            }
+            intChoice = Integer.parseInt(input);
+        } while (intChoice < 1 || intChoice > 3);
+
+        switch (intChoice) {
+            case 1:
+                System.out.println("Seleziona il produttore che desideri rimuovere:");
+                input = scanner.nextLine();
+                for (Product item : stock.keySet()) {
+                    if (input.equalsIgnoreCase(item.getProducer())) {
+                        filteredStock.put(item, stock.get(item));
+                        System.out.println(item + " Quantity: " + stock.get(item));
+                    }
+                }
+                System.out.println("Seleziona il modello dell'articolo che desideri rimuovere:");
+                input = scanner.nextLine();
+                for (Product filteredItem : filteredStock.keySet()) {
+                    if (input.equalsIgnoreCase(filteredItem.getModel())) {
+                        System.out.println("Hai selezionato:\n" + filteredItem + "\nArticoli  totali: " + stock.get(filteredItem));
+                        System.out.println("Seleziona la quantità di articoli che desideri rimuovere: ");
+                        inputDigit = scanner.nextInt();
+                        removeProduct(filteredItem, inputDigit);
+                        if (stock.get(filteredItem) == null) {
+                            System.out.println("Articoli in magazzino restanti: 0");
+                        } else {
+                            System.out.println("Articoli in magazzino restanti: " + stock.get(filteredItem));
+                        }
+                    }
+                }
+                break;
+
+            case 2:
+                System.out.println("Seleziona il modello che desideri rimuovere:");
+                input = scanner.nextLine();
+                for (Product item : stock.keySet()) {
+                    if (input.equalsIgnoreCase(item.getModel())) {
+                        System.out.println("Hai selezionato:\n" + item + "\nArticoli totali: " + stock.get(item));
+                        System.out.println("Seleziona la quantità di articoli che desideri rimuovere: ");
+                        inputDigit = scanner.nextInt();
+                        removeProduct(item, inputDigit);
+                        if (stock.get(item) == null) {
+                            System.out.println("Articoli in magazzino restanti: 0");
+                        } else {
+                            System.out.println("Articoli in magazzino restanti: " + stock.get(item));
+                        }
+                    }
+                }
+                break;
+
+            case 3:
+                System.out.println("Seleziona l'ID dell'articolo che desideri rimuovere:");
+                inputDigit = scanner.nextInt();
+                for (Product item : stock.keySet()) {
+                    if (inputDigit == item.getId()) {
+                        System.out.println("Hai selezionato:\n" + item + "\nArticoli totali: " + stock.get(item));
+                        System.out.println("Seleziona la quantità di articoli che desideri rimuovere: ");
+                        inputDigit = scanner.nextInt();
+                        removeProduct(item, inputDigit);
+                        if (stock.get(item) == null) {
+                            System.out.println("Articoli in magazzino restanti: 0");
+                        } else {
+                            System.out.println("Articoli in magazzino restanti: " + stock.get(item));
+                        }
+                    }
+                }
+                break;
+
+        }
     }
 }
 
