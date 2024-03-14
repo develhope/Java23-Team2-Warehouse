@@ -1,9 +1,6 @@
 package classes;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Warehouse {
     private Map<Product, Integer> stock;
@@ -104,7 +101,7 @@ public class Warehouse {
     }
 
     //È un metodo che resta in ascolto e ripropone la possibilità di scelte fino a che non è inserita Q
-    public void scnHome() {
+    public void scnHome() throws Exception {
         Scanner scanner = new Scanner(System.in);
         String input;
         do {
@@ -202,10 +199,9 @@ public class Warehouse {
         carts.remove(cartsName.get(intChoice));
     }
 
-    public void scnResearch() {
+    public void scnResearch() throws Exception {
         Scanner scanner = new Scanner(System.in);
         String input;
-        int inputDigit;
         int intChoice;
         do {
             System.out.println("Seleziona il criterio di ricerca (usa i numeri):\n" +
@@ -223,33 +219,97 @@ public class Warehouse {
         switch (intChoice) {
             case 1:
                 System.out.println("Seleziona il produttore che vuoi cercare:");
-                input = scanner.nextLine();
-                for (Product item : stock.keySet()) {
-                    if (input.equalsIgnoreCase(item.getProducer())) {
-                        System.out.println(item.toStringExtended() + "\nQuantity: " + stock.get(item));
-                        System.out.println();
-                    }
+
+                try {
+                    printElements(researchProducer(scanner.nextLine()));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Non è stato trovato nessun elemento corrispondente.\n");
                 }
+                System.out.println("Vuoi continuare a cercare? \n0. Sì   1. No");
+                askConfirmation(scanner.nextInt());
                 break;
             case 2:
                 System.out.println("Seleziona il modello che vuoi cercare:");
-                input = scanner.nextLine();
-                for (Product item : stock.keySet()) {
-                    if (input.equalsIgnoreCase(item.getModel())) {
-                        System.out.println(item.toStringExtended() + "\nQuantity: " + stock.get(item));
-                        System.out.println();
-                    }
+                try {
+                    printElements(researchModel(scanner.nextLine()));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Non è stato trovato nessun elemento corrispondente.\n");
                 }
+                System.out.println("Vuoi continuare a cercare? \n0. Sì   1. No");
+                askConfirmation(scanner.nextInt());
                 break;
             case 3:
                 System.out.println("Seleziona l'ID del prodotto che vuoi cercare:");
-                inputDigit = scanner.nextInt();
-                for (Product item : stock.keySet()) {
-                    if (inputDigit == item.getId()) {
-                        System.out.println(item.toStringExtended() + "\nQuantity: " + stock.get(item));
-                        System.out.println();
-                    }
+                try {
+                    printElements(researchID(scanner.nextLine()));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Non è stato trovato nessun elemento corrispondente.\n");
                 }
+                System.out.println("Vuoi continuare a cercare? \n0. Sì   1. No");
+                askConfirmation(scanner.nextInt());
+                break;
+        }
+    }
+
+    public boolean checkIfEquals(String productData, String input) {
+
+        boolean result = productData.equalsIgnoreCase(input);
+
+        return result;
+    }
+
+    public void printElements(HashMap<Product, Integer> map) {
+        for (Product item : map.keySet()) {
+            System.out.println(item.toStringExtended() + "\nQuantity: " + map.get(item) + "\n \n");
+        }
+    }
+
+
+    public HashMap<Product, Integer> researchProducer(String input)  {
+        HashMap<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : stock.keySet()) {
+            if (checkIfEquals(item.getProducer(), input)) {
+                filteredMap.put(item, stock.get(item));
+            }
+        }
+        if (filteredMap.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        return filteredMap;
+    }
+
+    public HashMap<Product, Integer> researchModel (String input)  {
+        HashMap<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : stock.keySet()) {
+            if (checkIfEquals(item.getModel(), input)) {
+                filteredMap.put(item, stock.get(item));
+            }
+        }
+        if (filteredMap.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        return filteredMap;
+    }
+    public HashMap<Product, Integer> researchID (String input)  {
+        HashMap<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : stock.keySet()) {
+            if (checkIfEquals(String.valueOf(item.getId()), input)) {
+                filteredMap.put(item, stock.get(item));
+            }
+        }
+        if (filteredMap.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        return filteredMap;
+    }
+
+    public void askConfirmation(int choice) throws Exception {
+
+        switch (choice) {
+            case 0:
+                scnResearch();
+                break;
+            case 1:
                 break;
         }
     }
