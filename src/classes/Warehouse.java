@@ -205,20 +205,32 @@ public class Warehouse {
         int intChoice;
         do {
             System.out.println("Seleziona il criterio di ricerca (usa i numeri):\n" +
-                    "1.Produttore   2.Modello    3.ID   e. Torna alla scehrmata precedente");
+                    "1.Tipo di Prodotto    2.Produttore   3.Modello    4.ID    5.Prezzo d'acquisto   \n6.Prezzo di vendita   7.Range di prezzo di acquisto   8.Range di prezzo di vendita   \ne. Torna alla scehrmata precedente");
             input = scanner.nextLine();
             if (input.equalsIgnoreCase("e")) {
                 return;
             }
-            while (!input.matches("[1-3]")) {
+            while (!input.matches("[1-8]")) {
                 System.out.println("Usa i numeri per effettuare la scelta o 'e' per tornare alla schermata precedente\n");
                 input = scanner.nextLine();
             }
             intChoice = Integer.parseInt(input);
-        } while (intChoice < 1 || intChoice > 3);
+        } while (intChoice < 1 || intChoice > 8);
         switch (intChoice) {
             case 1:
-                System.out.println("Seleziona il produttore che vuoi cercare:");
+                System.out.println("Seleziona il tipo di articolo che desideri cercare:");
+
+                try {
+                    printElements(researchKindOfProduct(scanner.nextLine()));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Non è stato trovato nessun elemento corrispondente.\n");
+                }
+                System.out.println("Vuoi continuare a cercare? \n0. Sì   1. No");
+                askConfirmation(scanner.nextInt());
+                break;
+
+            case 2:
+                System.out.println("Seleziona il produttore che desideri cercare:");
 
                 try {
                     printElements(researchProducer(scanner.nextLine()));
@@ -228,8 +240,8 @@ public class Warehouse {
                 System.out.println("Vuoi continuare a cercare? \n0. Sì   1. No");
                 askConfirmation(scanner.nextInt());
                 break;
-            case 2:
-                System.out.println("Seleziona il modello che vuoi cercare:");
+            case 3:
+                System.out.println("Seleziona il modello che desideri cercare:");
                 try {
                     printElements(researchModel(scanner.nextLine()));
                 } catch (IllegalArgumentException e) {
@@ -238,10 +250,60 @@ public class Warehouse {
                 System.out.println("Vuoi continuare a cercare? \n0. Sì   1. No");
                 askConfirmation(scanner.nextInt());
                 break;
-            case 3:
-                System.out.println("Seleziona l'ID del prodotto che vuoi cercare:");
+            case 4:
+                System.out.println("Seleziona l'ID del prodotto che desideri cercare:");
                 try {
-                    printElements(researchID(scanner.nextLine()));
+                    printElements(researchID(scanner.nextInt()));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Non è stato trovato nessun elemento corrispondente.\n");
+                }
+                System.out.println("Vuoi continuare a cercare? \n0. Sì   1. No");
+                askConfirmation(scanner.nextInt());
+                break;
+
+            case 5:
+                System.out.println("Seleziona il prezzo d'acquisto del prodotto che desideri cercare:");
+                try {
+                    printElements(researchPurchasePrice(scanner.nextDouble()));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Non è stato trovato nessun elemento corrispondente.\n");
+                }
+                System.out.println("Vuoi continuare a cercare? \n0. Sì   1. No");
+                askConfirmation(scanner.nextInt());
+                break;
+
+            case 6:
+                System.out.println("Seleziona il prezzo di vendita del prodotto che desideri cercare:");
+                try {
+                    printElements(researchSellPrice(scanner.nextDouble()));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Non è stato trovato nessun elemento corrispondente.\n");
+                }
+                System.out.println("Vuoi continuare a cercare? \n0. Sì   1. No");
+                askConfirmation(scanner.nextInt());
+                break;
+
+            case 7:
+                System.out.println("Seleziona il range di prezzo di acquisto dei prodotti che desideri cercare: \nDigita il prezzo minimo che desideri cercare: ");
+                double minPurchasePrice = scanner.nextDouble();
+                System.out.println("Digita il prezzo massimo che desideri cercare: ");
+                double maxPurchasePrice = scanner.nextDouble();
+                try {
+                    printElements(researchPurchasePriceInRange(minPurchasePrice, maxPurchasePrice));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Non è stato trovato nessun elemento corrispondente.\n");
+                }
+                System.out.println("Vuoi continuare a cercare? \n0. Sì   1. No");
+                askConfirmation(scanner.nextInt());
+                break;
+
+            case 8:
+                System.out.println("Seleziona il range di prezzo di vendita dei prodotti che desideri cercare: \nDigita il prezzo minimo che desideri cercare: ");
+                double minSellPrice = scanner.nextDouble();
+                System.out.println("Digita il prezzo massimo che desideri cercare: ");
+                double maxSellPrice = scanner.nextDouble();
+                try {
+                    printElements(researchSellPriceInRange(minSellPrice, maxSellPrice));
                 } catch (IllegalArgumentException e) {
                     System.out.println("Non è stato trovato nessun elemento corrispondente.\n");
                 }
@@ -251,11 +313,10 @@ public class Warehouse {
         }
     }
 
-    public boolean checkIfEquals(String productData, String input) {
 
-        boolean result = productData.equalsIgnoreCase(input);
+    public boolean checkIfPriceIsInRange(double maxLimit, double minLimit, double checkPrice) {
 
-        return result;
+        return minLimit <= checkPrice && checkPrice <= maxLimit;
     }
 
     public void printElements(HashMap<Product, Integer> map) {
@@ -264,11 +325,10 @@ public class Warehouse {
         }
     }
 
-
-    public HashMap<Product, Integer> researchProducer(String input)  {
+    public HashMap<Product, Integer> researchKindOfProduct(String input) {
         HashMap<Product, Integer> filteredMap = new HashMap<>();
         for (Product item : stock.keySet()) {
-            if (checkIfEquals(item.getProducer(), input)) {
+            if (item.getArticle().equalsIgnoreCase(input)) {
                 filteredMap.put(item, stock.get(item));
             }
         }
@@ -278,10 +338,10 @@ public class Warehouse {
         return filteredMap;
     }
 
-    public HashMap<Product, Integer> researchModel (String input)  {
+    public HashMap<Product, Integer> researchProducer(String input) {
         HashMap<Product, Integer> filteredMap = new HashMap<>();
         for (Product item : stock.keySet()) {
-            if (checkIfEquals(item.getModel(), input)) {
+            if (item.getProducer().equalsIgnoreCase(input)) {
                 filteredMap.put(item, stock.get(item));
             }
         }
@@ -290,10 +350,76 @@ public class Warehouse {
         }
         return filteredMap;
     }
-    public HashMap<Product, Integer> researchID (String input)  {
+
+    public HashMap<Product, Integer> researchModel(String input) {
         HashMap<Product, Integer> filteredMap = new HashMap<>();
         for (Product item : stock.keySet()) {
-            if (checkIfEquals(String.valueOf(item.getId()), input)) {
+            if (item.getModel().equalsIgnoreCase(input)) {
+                filteredMap.put(item, stock.get(item));
+            }
+        }
+        if (filteredMap.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        return filteredMap;
+    }
+
+    public HashMap<Product, Integer> researchID(int input) {
+        HashMap<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : stock.keySet()) {
+            if (item.getId() == input) {
+                filteredMap.put(item, stock.get(item));
+            }
+        }
+        if (filteredMap.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        return filteredMap;
+    }
+
+    public HashMap<Product, Integer> researchSellPrice(double input) {
+        HashMap<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : stock.keySet()) {
+            if (item.getSellPrice() == input) {
+                filteredMap.put(item, stock.get(item));
+            }
+        }
+        if (filteredMap.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        return filteredMap;
+    }
+
+    public HashMap<Product, Integer> researchPurchasePrice(double input) {
+        HashMap<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : stock.keySet()) {
+            if (item.getPurchasePrice() == input) {
+                filteredMap.put(item, stock.get(item));
+            }
+        }
+        if (filteredMap.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        return filteredMap;
+    }
+
+    public HashMap<Product, Integer> researchPurchasePriceInRange(double minLimit, double maxLimit) {
+        HashMap<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : stock.keySet()) {
+            if (checkIfPriceIsInRange(maxLimit, minLimit, item.getPurchasePrice())) {
+                filteredMap.put(item, stock.get(item));
+            }
+        }
+        if (filteredMap.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        return filteredMap;
+    }
+
+    public HashMap<Product, Integer> researchSellPriceInRange(double minLimit, double maxLimit) {
+        HashMap<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : stock.keySet()) {
+            if (checkIfPriceIsInRange(maxLimit, minLimit, item.getSellPrice())) {
                 filteredMap.put(item, stock.get(item));
             }
         }
