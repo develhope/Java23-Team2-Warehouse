@@ -221,66 +221,66 @@ public class Warehouse {
                 System.out.println("Seleziona il tipo di articolo che desideri cercare:");
 
                 try {
-                    printElements(researchKindOfProduct(scanner.nextLine()));
+                    printElements(researchKindOfProduct(stock, scanner.nextLine()));
                 } catch (IllegalArgumentException e) {
                     System.out.println("Non è stato trovato nessun elemento corrispondente.\n");
                 }
                 System.out.println("Vuoi continuare a cercare? \n0. Sì   1. No");
-                askConfirmation(scanner.nextInt());
+                askConfirmationEndTask(scanner.nextInt());
                 break;
 
             case 2:
                 System.out.println("Seleziona il produttore che desideri cercare:");
 
                 try {
-                    printElements(researchProducer(scanner.nextLine()));
+                    printElements(researchProducer(stock, scanner.nextLine()));
                 } catch (IllegalArgumentException e) {
                     System.out.println("Non è stato trovato nessun elemento corrispondente.\n");
                 }
                 System.out.println("Vuoi continuare a cercare? \n0. Sì   1. No");
-                askConfirmation(scanner.nextInt());
+                askConfirmationEndTask(scanner.nextInt());
                 break;
             case 3:
                 System.out.println("Seleziona il modello che desideri cercare:");
                 try {
-                    printElements(researchModel(scanner.nextLine()));
+                    printElements(researchModel(stock, scanner.nextLine()));
                 } catch (IllegalArgumentException e) {
                     System.out.println("Non è stato trovato nessun elemento corrispondente.\n");
                 }
                 System.out.println("Vuoi continuare a cercare? \n0. Sì   1. No");
-                askConfirmation(scanner.nextInt());
+                askConfirmationEndTask(scanner.nextInt());
                 break;
             case 4:
                 System.out.println("Seleziona l'ID del prodotto che desideri cercare:");
                 try {
-                    printElements(researchID(scanner.nextInt()));
+                    printElements(researchID(stock, scanner.nextInt()));
                 } catch (IllegalArgumentException e) {
                     System.out.println("Non è stato trovato nessun elemento corrispondente.\n");
                 }
                 System.out.println("Vuoi continuare a cercare? \n0. Sì   1. No");
-                askConfirmation(scanner.nextInt());
+                askConfirmationEndTask(scanner.nextInt());
                 break;
 
             case 5:
                 System.out.println("Seleziona il prezzo d'acquisto del prodotto che desideri cercare:");
                 try {
-                    printElements(researchPurchasePrice(scanner.nextDouble()));
+                    printElements(researchPurchasePrice(stock, scanner.nextDouble()));
                 } catch (IllegalArgumentException e) {
                     System.out.println("Non è stato trovato nessun elemento corrispondente.\n");
                 }
                 System.out.println("Vuoi continuare a cercare? \n0. Sì   1. No");
-                askConfirmation(scanner.nextInt());
+                askConfirmationEndTask(scanner.nextInt());
                 break;
 
             case 6:
                 System.out.println("Seleziona il prezzo di vendita del prodotto che desideri cercare:");
                 try {
-                    printElements(researchSellPrice(scanner.nextDouble()));
+                    printElements(researchSellPrice(stock, scanner.nextDouble()));
                 } catch (IllegalArgumentException e) {
                     System.out.println("Non è stato trovato nessun elemento corrispondente.\n");
                 }
                 System.out.println("Vuoi continuare a cercare? \n0. Sì   1. No");
-                askConfirmation(scanner.nextInt());
+                askConfirmationEndTask(scanner.nextInt());
                 break;
 
             case 7:
@@ -289,12 +289,12 @@ public class Warehouse {
                 System.out.println("Digita il prezzo massimo che desideri cercare: ");
                 double maxPurchasePrice = scanner.nextDouble();
                 try {
-                    printElements(researchPurchasePriceInRange(minPurchasePrice, maxPurchasePrice));
+                    printElements(researchPurchasePriceInRange(stock, minPurchasePrice, maxPurchasePrice));
                 } catch (IllegalArgumentException e) {
                     System.out.println("Non è stato trovato nessun elemento corrispondente.\n");
                 }
                 System.out.println("Vuoi continuare a cercare? \n0. Sì   1. No");
-                askConfirmation(scanner.nextInt());
+                askConfirmationEndTask(scanner.nextInt());
                 break;
 
             case 8:
@@ -303,12 +303,12 @@ public class Warehouse {
                 System.out.println("Digita il prezzo massimo che desideri cercare: ");
                 double maxSellPrice = scanner.nextDouble();
                 try {
-                    printElements(researchSellPriceInRange(minSellPrice, maxSellPrice));
+                    printElements(researchSellPriceInRange(stock, minSellPrice, maxSellPrice));
                 } catch (IllegalArgumentException e) {
                     System.out.println("Non è stato trovato nessun elemento corrispondente.\n");
                 }
                 System.out.println("Vuoi continuare a cercare? \n0. Sì   1. No");
-                askConfirmation(scanner.nextInt());
+                askConfirmationEndTask(scanner.nextInt());
                 break;
         }
     }
@@ -319,17 +319,17 @@ public class Warehouse {
         return minLimit <= checkPrice && checkPrice <= maxLimit;
     }
 
-    public void printElements(HashMap<Product, Integer> map) {
+    public void printElements(Map<Product, Integer> map) {
         for (Product item : map.keySet()) {
             System.out.println(item.toStringExtended() + "\nQuantity: " + map.get(item) + "\n \n");
         }
     }
 
-    public HashMap<Product, Integer> researchKindOfProduct(String input) {
-        HashMap<Product, Integer> filteredMap = new HashMap<>();
-        for (Product item : stock.keySet()) {
+    public Map<Product, Integer> researchKindOfProduct(Map<Product, Integer> map, String input) {
+        Map<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : map.keySet()) {
             if (item.getArticle().equalsIgnoreCase(input)) {
-                filteredMap.put(item, stock.get(item));
+                filteredMap.put(item, map.get(item));
             }
         }
         if (filteredMap.isEmpty()) {
@@ -338,11 +338,11 @@ public class Warehouse {
         return filteredMap;
     }
 
-    public HashMap<Product, Integer> researchProducer(String input) {
-        HashMap<Product, Integer> filteredMap = new HashMap<>();
-        for (Product item : stock.keySet()) {
+    public Map<Product, Integer> researchProducer(Map<Product, Integer> map, String input) {
+        Map<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : map.keySet()) {
             if (item.getProducer().equalsIgnoreCase(input)) {
-                filteredMap.put(item, stock.get(item));
+                filteredMap.put(item, map.get(item));
             }
         }
         if (filteredMap.isEmpty()) {
@@ -351,11 +351,11 @@ public class Warehouse {
         return filteredMap;
     }
 
-    public HashMap<Product, Integer> researchModel(String input) {
-        HashMap<Product, Integer> filteredMap = new HashMap<>();
-        for (Product item : stock.keySet()) {
+    public Map<Product, Integer> researchModel(Map<Product, Integer> map, String input) {
+        Map<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : map.keySet()) {
             if (item.getModel().equalsIgnoreCase(input)) {
-                filteredMap.put(item, stock.get(item));
+                filteredMap.put(item, map.get(item));
             }
         }
         if (filteredMap.isEmpty()) {
@@ -364,11 +364,11 @@ public class Warehouse {
         return filteredMap;
     }
 
-    public HashMap<Product, Integer> researchID(int input) {
-        HashMap<Product, Integer> filteredMap = new HashMap<>();
-        for (Product item : stock.keySet()) {
+    public Map<Product, Integer> researchID(Map<Product, Integer> map, int input) {
+        Map<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : map.keySet()) {
             if (item.getId() == input) {
-                filteredMap.put(item, stock.get(item));
+                filteredMap.put(item, map.get(item));
             }
         }
         if (filteredMap.isEmpty()) {
@@ -377,11 +377,11 @@ public class Warehouse {
         return filteredMap;
     }
 
-    public HashMap<Product, Integer> researchSellPrice(double input) {
-        HashMap<Product, Integer> filteredMap = new HashMap<>();
-        for (Product item : stock.keySet()) {
+    public Map<Product, Integer> researchSellPrice(Map<Product, Integer> map, double input) {
+        Map<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : map.keySet()) {
             if (item.getSellPrice() == input) {
-                filteredMap.put(item, stock.get(item));
+                filteredMap.put(item, map.get(item));
             }
         }
         if (filteredMap.isEmpty()) {
@@ -390,11 +390,11 @@ public class Warehouse {
         return filteredMap;
     }
 
-    public HashMap<Product, Integer> researchPurchasePrice(double input) {
-        HashMap<Product, Integer> filteredMap = new HashMap<>();
-        for (Product item : stock.keySet()) {
+    public Map<Product, Integer> researchPurchasePrice(Map<Product, Integer> map, double input) {
+        Map<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : map.keySet()) {
             if (item.getPurchasePrice() == input) {
-                filteredMap.put(item, stock.get(item));
+                filteredMap.put(item, map.get(item));
             }
         }
         if (filteredMap.isEmpty()) {
@@ -403,11 +403,11 @@ public class Warehouse {
         return filteredMap;
     }
 
-    public HashMap<Product, Integer> researchPurchasePriceInRange(double minLimit, double maxLimit) {
-        HashMap<Product, Integer> filteredMap = new HashMap<>();
-        for (Product item : stock.keySet()) {
+    public Map<Product, Integer> researchPurchasePriceInRange(Map<Product, Integer> map, double minLimit, double maxLimit) {
+        Map<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : map.keySet()) {
             if (checkIfPriceIsInRange(maxLimit, minLimit, item.getPurchasePrice())) {
-                filteredMap.put(item, stock.get(item));
+                filteredMap.put(item, map.get(item));
             }
         }
         if (filteredMap.isEmpty()) {
@@ -416,11 +416,11 @@ public class Warehouse {
         return filteredMap;
     }
 
-    public HashMap<Product, Integer> researchSellPriceInRange(double minLimit, double maxLimit) {
-        HashMap<Product, Integer> filteredMap = new HashMap<>();
-        for (Product item : stock.keySet()) {
+    public Map<Product, Integer> researchSellPriceInRange(Map<Product, Integer> map, double minLimit, double maxLimit) {
+        Map<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : map.keySet()) {
             if (checkIfPriceIsInRange(maxLimit, minLimit, item.getSellPrice())) {
-                filteredMap.put(item, stock.get(item));
+                filteredMap.put(item, map.get(item));
             }
         }
         if (filteredMap.isEmpty()) {
@@ -429,7 +429,8 @@ public class Warehouse {
         return filteredMap;
     }
 
-    public void askConfirmation(int choice) throws Exception {
+
+    public void askConfirmationEndTask(int choice) throws Exception {
 
         switch (choice) {
             case 0:
