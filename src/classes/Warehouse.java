@@ -146,7 +146,7 @@ public class Warehouse {
                     scnRemoveCart();
                     break;
                 case 5:
-                    Consolle.scnResearch(stock);
+                    Consolle.scnResearchSeller(stock);
                     break;
             }
         } while (!input.equalsIgnoreCase("q"));
