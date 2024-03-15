@@ -1,6 +1,6 @@
 package classes;
 
-import functions.SearchingFunctions;
+import functions.Consolle;
 
 import java.util.*;
 
@@ -146,7 +146,7 @@ public class Warehouse {
                     scnRemoveCart();
                     break;
                 case 5:
-                    SearchingFunctions.scnResearch(stock);
+                    Consolle.scnResearch(stock);
                     break;
             }
         } while (!input.equalsIgnoreCase("q"));

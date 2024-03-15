@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class SearchingFunctions {
+public class Consolle {
 
     public static void scnResearch(Map<Product, Integer> map) throws Exception {
         Scanner scanner = new Scanner(System.in);
