@@ -4,10 +4,6 @@ package classes;
 import java.util.HashMap;
 import java.util.Map;
 
-import functions.Console;
-
-import java.util.*;
-
 
 public class Warehouse {
     private Map<Product, Integer> stock;
