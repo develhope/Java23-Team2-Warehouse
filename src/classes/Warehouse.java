@@ -1,9 +1,8 @@
 package classes;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import functions.Console;
+
+import java.util.*;
 
 public class Warehouse {
     private Map<Product, Integer> stock;
@@ -104,7 +103,7 @@ public class Warehouse {
     }
 
     //È un metodo che resta in ascolto e ripropone la possibilità di scelte fino a che non è inserita Q
-    public void scnHome() {
+    public void scnHome() throws Exception {
         Scanner scanner = new Scanner(System.in);
         String input;
         do {
@@ -115,6 +114,7 @@ public class Warehouse {
                         "2. Aggiungere un prodotto al magazzino\n" +
                         "3. Creare un carrello\n" +
                         "4. Eliminare un Carrello\n" +
+                        "5. Ricerca prodotto\n" +
                         // Qui si possono aggiungere le varie scelte mano a mano che vengono sviluppate
                         "q. Esci dal programma");
                 input = scanner.nextLine();
@@ -122,13 +122,13 @@ public class Warehouse {
                     return;
                 }
                 //Il registro del while va aggiornato facendo si che includa i numeri delle nuove scelte
-                while (!input.matches("[1-4]")) {
-                    System.out.println("\nInserisci un numero tra 1 e 4 o 'q' per uscire.");
+                while (!input.matches("[1-5]")) {
+                    System.out.println("\nInserisci un numero tra 1 e 5 o 'q' per uscire.");
                     input = scanner.nextLine();
                 }
                 intChoice = Integer.parseInt(input);
                 //Anche qui sotto
-            } while (intChoice < 1 || intChoice > 4);
+            } while (intChoice < 1 || intChoice > 5);
             // Allo Switch va aggiunta la gestione dell'aggiunta.
             switch (intChoice) {
                 case 1:
@@ -144,6 +144,10 @@ public class Warehouse {
                     break;
                 case 4:
                     scnRemoveCart();
+                    break;
+                case 5:
+                    Console.scnResearchSeller(stock);
+                    break;
             }
         } while (!input.equalsIgnoreCase("q"));
     }
@@ -177,7 +181,7 @@ public class Warehouse {
         for (int i = 0; i < cartsName.size(); i++) {
             toPrint = toPrint.concat(i + ". " + cartsName.get(i) + " ");
         }
-        int intChoice = -1;
+        int intChoice;
         do {
             System.out.print("Seleziona il carrello che vorresti eliminare:\n" +
                     toPrint + "\n" +
@@ -195,6 +199,106 @@ public class Warehouse {
         } while (intChoice < 0 || intChoice > carts.size());
 
         carts.remove(cartsName.get(intChoice));
+    }
+    public static void checkIfEmptyMap(Map<Product, Integer> originalMap) {
+        if (originalMap.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        try {
+            printFilteredElements(originalMap);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Non è stato trovato nessun elemento corrispondente.\n");
+        }
+    }
+
+    public static boolean checkIfPriceIsInRange(double maxLimit, double minLimit, double checkPrice) {
+        return minLimit <= checkPrice && checkPrice <= maxLimit;
+    }
+
+    public static void printFilteredElements(Map<Product, Integer> map) {  //stampa risultato ricerca
+        for (Product item : map.keySet()) {
+            System.out.println(item.toStringExtended() + "\nQuantity: " + map.get(item) + "\n \n");
+        }
+    }
+
+    public static Map<Product, Integer> researchKindOfProduct(Map<Product, Integer> warehouse, String input) {
+        Map<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : warehouse.keySet()) {
+            if (item.getArticle().equalsIgnoreCase(input)) {
+                filteredMap.put(item, warehouse.get(item));
+            }
+        }
+        return filteredMap;
+    }
+
+    public static Map<Product, Integer> researchProducer(Map<Product, Integer> warehouse, String input) {
+        Map<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : warehouse.keySet()) {
+            if (item.getProducer().equalsIgnoreCase(input)) {
+                filteredMap.put(item, warehouse.get(item));
+            }
+        }
+        return filteredMap;
+    }
+
+    public static Map<Product, Integer> researchModel(Map<Product, Integer> warehouse, String input) {
+        Map<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : warehouse.keySet()) {
+            if (item.getModel().equalsIgnoreCase(input)) {
+                filteredMap.put(item, warehouse.get(item));
+            }
+        }
+        return filteredMap;
+    }
+
+    public static Map<Product, Integer> researchID(Map<Product, Integer> warehouse, int input) {
+        Map<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : warehouse.keySet()) {
+            if (item.getId() == input) {
+                filteredMap.put(item, warehouse.get(item));
+            }
+        }
+        return filteredMap;
+    }
+
+    public static Map<Product, Integer> researchSellPrice(Map<Product, Integer> warehouse, double input) {
+        Map<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : warehouse.keySet()) {
+            if (item.getSellPrice() == input) {
+                filteredMap.put(item, warehouse.get(item));
+            }
+        }
+        return filteredMap;
+    }
+
+    public static Map<Product, Integer> researchPurchasePrice(Map<Product, Integer> warehouse, double input) {
+        Map<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : warehouse.keySet()) {
+            if (item.getPurchasePrice() == input) {
+                filteredMap.put(item, warehouse.get(item));
+            }
+        }
+        return filteredMap;
+    }
+
+    public static Map<Product, Integer> researchPurchasePriceInRange(Map<Product, Integer> warehouse, double minLimit, double maxLimit) {
+        Map<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : warehouse.keySet()) {
+            if (checkIfPriceIsInRange(maxLimit, minLimit, item.getPurchasePrice())) {
+                filteredMap.put(item, warehouse.get(item));
+            }
+        }
+        return filteredMap;
+    }
+
+    public static Map<Product, Integer> researchSellPriceInRange(Map<Product, Integer> warehouse, double minLimit, double maxLimit) {
+        Map<Product, Integer> filteredMap = new HashMap<>();
+        for (Product item : warehouse.keySet()) {
+            if (checkIfPriceIsInRange(maxLimit, minLimit, item.getSellPrice())) {
+                filteredMap.put(item, warehouse.get(item));
+            }
+        }
+        return filteredMap;
     }
 }
 
