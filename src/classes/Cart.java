@@ -78,7 +78,8 @@ public class Cart {
         updateTotalPrice();
     }
 
-    public void addToCart(Product product, int quantity, Warehouse warehouse) throws Exception {
+
+    public void updateCartQuantity(Product product, int quantity, Warehouse warehouse) throws Exception {
         int availableQuantity = warehouse.checkStock(product);
         // Controlla se la quantità richiesta è disponibile nel magazzino
         if (availableQuantity >= quantity) {
