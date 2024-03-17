@@ -46,7 +46,7 @@ public class Console {
                 }
                 //Il registro del while va aggiornato facendo si che includa i numeri delle nuove scelte
                 while (!input.matches("[1-2]")) {
-                    System.out.println("\nInserisci un numero tra 1 e 4 o 'q' per uscire.");
+                    System.out.println("\nInserisci un numero tra 1 e 2 o 'q' per uscire.");
                     input = scanner.nextLine();
                 }
                 intChoice = Integer.parseInt(input);
