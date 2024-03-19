@@ -1,11 +1,27 @@
 package classes;
-
-
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 public class Warehouse {
+    public static <Device extends Purchasable> double puchasbleMediumCost(List<Device> devices) {
+        double totalCost = 0;
+        //Calcolo di ogni dispositivo
+        for (Device device : devices) {
+            totalCost += device.getPurchasable();
+        }
+        //Se il magazzino non è vuoto calcola la media
+        if (!devices.isEmpty()) {
+            return totalCost / devices.size();
+        } else {
+            return 0;//Altrimenti ritorna 0
+        }
+    }
+
+    public interface Purchasable {
+        double getPurchasable();
+    }
     private Map<Product, Integer> stock;
 
     public Warehouse() {
