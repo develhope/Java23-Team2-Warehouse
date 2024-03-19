@@ -9,7 +9,8 @@ public class Console {
     public static void main(String[] args) {
         var warehouse = new Warehouse();
         fillUpWarehouse(warehouse);
-        scnWarehouseManagerHome(warehouse);
+        Scanner scanner = new Scanner(System.in);
+        scnWelcome(scanner, warehouse);
     }
 
     public static products.KindOfProduct scnProductKindChoice(Scanner scanner) {
@@ -32,8 +33,7 @@ public class Console {
     }
 
     //È un metodo che resta in ascolto e ripropone la possibilità di scelte fino a che non è inserita Q
-    public static void scnWarehouseManagerHome(Warehouse warehouse) {
-        Scanner scanner = new Scanner(System.in);
+    public static void scnWarehouseManagerHome(Scanner scanner, Warehouse warehouse) {
         String input;
         do {
             int intChoice;
@@ -67,8 +67,7 @@ public class Console {
         } while (!input.equalsIgnoreCase("q"));
     }
 
-    public static void scnResearchSeller(Map<Product, Integer> warehouse) throws Exception {
-        Scanner scanner = new Scanner(System.in);
+    public static void scnResearchSeller(Scanner scanner, Map<Product, Integer> warehouse) throws Exception {
         String input;
         int intChoice;
         do {
@@ -147,8 +146,7 @@ public class Console {
         }
     }
 
-    public static void scnResearchClient(Map<Product, Integer> warehouse) throws Exception {
-        Scanner scanner = new Scanner(System.in);
+    public static void scnResearchClient(Scanner scanner, Map<Product, Integer> warehouse) throws Exception {
         String input;
         int intChoice;
         do {
@@ -212,8 +210,7 @@ public class Console {
     }
 
     // Permette all'utente di inserire un prodotto a magazzino tramite un interfaccia da Terminale.
-    public static void scnAddProdToWarehouse(Warehouse warehouse) {
-        Scanner scanner = new Scanner(System.in);
+    public static void scnAddProdToWarehouse(Scanner scanner, Warehouse warehouse) {
         products.KindOfProduct article = scnProductKindChoice(scanner);
         System.out.println("Produttore:");
         String producer = scanner.nextLine();
@@ -234,17 +231,6 @@ public class Console {
         warehouse.addProduct(new Product(article, producer, model, description, display, storage, purchasePrice, sellPrice), quantity);
     }
 
-    public static void fillUpWarehouse(Warehouse warehouse) {
-        warehouse.addProduct(new Product(products.KindOfProduct.NOTEBOOK, "Apple", "M1", "tr", 2.3, 2, 1000, 1250), 10);
-        warehouse.addProduct(new Product(products.KindOfProduct.NOTEBOOK, "Apple", "M2", "tr", 2.3, 2, 1300, 1850), 6);
-        warehouse.addProduct(new Product(products.KindOfProduct.NOTEBOOK, "Asus", "M234", "tr", 2.3, 2, 900, 1450), 8);
-        warehouse.addProduct(new Product(products.KindOfProduct.SMARTPHONE, "Apple", "XR", "tr", 2.3, 2, 250, 400), 10);
-        warehouse.addProduct(new Product(products.KindOfProduct.SMARTPHONE, "Huawei", "Pro2", "tr", 2.3, 2, 100, 200), 6);
-        warehouse.addProduct(new Product(products.KindOfProduct.SMARTPHONE, "Asus", "Pen", "tr", 2.3, 2, 150, 300), 8);
-        warehouse.addProduct(new Product(products.KindOfProduct.TABLET, "Apple", "Ipad", "tr", 2.3, 2, 1000, 1250), 10);
-        warehouse.addProduct(new Product(products.KindOfProduct.TABLET, "Huawei", "Fire", "tr", 2.3, 2, 300, 400), 6);
-        warehouse.addProduct(new Product(products.KindOfProduct.TABLET, "Asus", "Pen", "tr", 2.3, 2, 400, 700), 8);
-    }
 
     public static void askConfirmationEndTaskSeller(Map<Product, Integer> warehouse) throws Exception {
         Scanner scanner = new Scanner(System.in);
@@ -289,6 +275,42 @@ public class Console {
                 break;
             case 1:
                 break;
+        }
+    }
+
+    public static void scnWelcome(Scanner scanner, Warehouse warehouse) {
+        String input;
+        int intChoice;
+        do {
+            System.out.println("Che interfaccia vuoi utilizzare?\n" +
+                    "0. Cliente 1. Magaziniere Q. Chiudi il programma");
+            input = scanner.nextLine();
+            if (input.equalsIgnoreCase("q")) {
+                return;
+            }
+            intChoice = Integer.parseInt(input);
+        } while ((intChoice < 0) || (intChoice > 1));
+        switch (intChoice) {
+            case 0 -> scnClient(scanner, warehouse);
+            case 1 -> scnWarehouseManagerHome(scanner, warehouse);
+        }
+    }
+
+    public static void scnClient(Scanner scanner, Warehouse warehouse) {
+        String input;
+        int intChoice;
+        do {
+            System.out.println("Che operazione vuoi effettuare?\n" +
+                    "0. Visualizzare il catalogo 1. Aggiungere un prodotto al carrello Q. Chiudi il programma");
+            input = scanner.nextLine();
+            if (input.equalsIgnoreCase("q")) {
+                return;
+            }
+            intChoice = Integer.parseInt(input);
+        } while ((intChoice < 0) || (intChoice > 1));
+        switch (intChoice) {
+            case 0 -> warehouse.printStock();
+            case 1 -> scnWarehouseManagerHome(scanner, warehouse);
         }
     }
 }
