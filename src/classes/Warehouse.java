@@ -1,12 +1,15 @@
 package classes;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class Warehouse {
     private Map<Product, Integer> stock;
+
+    // Metodo per ottenere la mappa dello stock
+    public Map<Product, Integer> getStock() {
+        return stock;
+    }
 
     public Warehouse() {
         this.stock = new HashMap<>();
@@ -163,5 +166,6 @@ public class Warehouse {
         warehouse.addProduct(new Product(products.KindOfProduct.TABLET, "Huawei", "Fire", "tr", 2.3, 2, 300, 400), 6);
         warehouse.addProduct(new Product(products.KindOfProduct.TABLET, "Asus", "Pen", "tr", 2.3, 2, 400, 700), 8);
     }
+
 }
 
