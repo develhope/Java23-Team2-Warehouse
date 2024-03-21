@@ -14,6 +14,7 @@ public class Warehouse {
     public Warehouse() {
         this.stock = new HashMap<>();
     }
+    
 
     //Aggiunge una determinata quantità di un prodotto specificato al magazzino.
     public void addProduct(Product product, int quantity) {

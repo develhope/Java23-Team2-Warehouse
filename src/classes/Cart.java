@@ -129,4 +129,27 @@ public class Cart {
         return this;
     }
 
+    public void removeItemFromCartById(int id, Warehouse warehouse) throws Exception {
+        Product productToRemove = null;
+
+        for (Product product : products.keySet()) {
+            if (product.getId() == id) {
+                productToRemove = product;
+                break;
+            }
+        }
+
+        // Verifica se è stato trovato un prodotto da rimuovere
+        if (productToRemove != null) {
+            int quantityToRemove = products.get(productToRemove);
+            products.remove(productToRemove);
+            warehouse.addProduct(productToRemove, quantityToRemove);
+            updateTotalPrice();
+            System.out.println("Prodotto rimosso dal carrello e ripristinato nel magazzino");
+        } else {
+            System.out.println("Prodotto non trovato nel carrello");
+        }
+    }
+
+
 }
