@@ -87,7 +87,14 @@ public class Product {
     }
 
 
-    public Product(KindOfProduct article, String producer, String model, String description, double display, double storage, double purchasePrice, double sellPrice) {
+    public Product(KindOfProduct article,
+                   String producer,
+                   String model,
+                   String description,
+                   double display,
+                   double storage,
+                   double purchasePrice,
+                   double sellPrice) {
 
         this.article = article;
         this.producer = producer;

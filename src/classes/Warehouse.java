@@ -1,16 +1,34 @@
 package classes;
 
-
+import java.awt.desktop.AppReopenedEvent;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class Warehouse {
-    private Map<Product, Integer> stock;
+    private final HashMap<String, Product> productsMap;
 
     public Warehouse() {
-        this.stock = new HashMap<>();
+        productsMap = new HashMap<>();
     }
+
+    public void addProduct(String productId, Product product) {
+        productsMap.put(productId, product);
+    }
+
+    public double purchasableMediumCost() {
+        double totalCost = 0;
+        for (Product product : productsMap.values()) {
+            totalCost += product.getPurchasePrice();
+        }
+        if (!productsMap.isEmpty()) {
+            return totalCost / productsMap.size();
+        } else {
+            return 0;
+        }
+    }
+
+    private Map<Product, Integer> stock;
 
     //Aggiunge una determinata quantità di un prodotto specificato al magazzino.
     public void addProduct(Product product, int quantity) {
