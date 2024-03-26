@@ -61,7 +61,7 @@ public class Console {
                     warehouse.printStock();
                     break;
                 case 2:
-                    scnAddProdToWarehouse(warehouse);
+                    scnAddProdToWarehouse(scanner, warehouse);
                     break;
             }
         } while (!input.equalsIgnoreCase("q"));
@@ -248,7 +248,7 @@ public class Console {
         } while (choice < 0 || choice > 1);
         switch (choice) {
             case 0:
-                scnResearchSeller(warehouse);
+                scnResearchSeller(scanner, warehouse);
                 break;
             case 1:
                 break;
@@ -271,7 +271,7 @@ public class Console {
         } while (choice < 0 || choice > 1);
         switch (choice) {
             case 0:
-                scnResearchClient(warehouse);
+                scnResearchClient(scanner, warehouse);
                 break;
             case 1:
                 break;
