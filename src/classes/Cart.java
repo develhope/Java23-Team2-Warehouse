@@ -78,6 +78,14 @@ public class Cart {
         updateTotalPrice();
     }
 
+    /**
+     * Aggiorna la quantità di un prodotto nel carrello.
+     *
+     * @param product   Il prodotto da aggiornare nel carrello.
+     * @param quantity  La nuova quantità del prodotto da impostare.
+     * @param warehouse Il magazzino da cui prelevare il prodotto.
+     * @throws Exception Se si verifica un'eccezione durante l'aggiornamento della quantità nel carrello.
+     */
 
     public void updateCartQuantity(Product product, int quantity, Warehouse warehouse) throws Exception {
         int availableQuantity = warehouse.checkStock(product);
@@ -95,6 +103,15 @@ public class Cart {
         }
     }
 
+    /**
+     * Aggiunge un prodotto al carrello utilizzando l'ID del prodotto e aggiorna lo stock del magazzino.
+     *
+     * @param productId L'ID del prodotto da aggiungere al carrello.
+     * @param quantity  La quantità del prodotto da aggiungere.
+     * @param warehouse Il magazzino da cui prelevare il prodotto.
+     * @return Il carrello aggiornato.
+     * @throws Exception Se si verifica un'eccezione durante l'aggiunta del prodotto al carrello.
+     */
     public Cart addToCartById(int productId, int quantity, Warehouse warehouse) throws Exception {
         Product productToAdd = null;
         for (Map.Entry<Product, Integer> entry : warehouse.getStock().entrySet()) {
@@ -109,14 +126,12 @@ public class Cart {
             return this;
         }
 
-        // Verifica se la quantità richiesta è disponibile nel magazzino
         int availableQuantity = warehouse.checkStock(productToAdd);
         if (availableQuantity < quantity) {
             System.out.println("Quantità richiesta non disponibile nel magazzino.");
             return this;
         }
 
-        // Aggiunge il prodotto al carrello
         if (products.containsKey(productToAdd)) {
             int updatedQuantity = products.get(productToAdd) + quantity;
             products.put(productToAdd, updatedQuantity);
@@ -129,6 +144,13 @@ public class Cart {
         return this;
     }
 
+    /**
+     * Rimuove un prodotto dal carrello utilizzando l'ID del prodotto e ripristina lo stock nel magazzino.
+     *
+     * @param id        L'ID del prodotto da rimuovere dal carrello.
+     * @param warehouse Il magazzino in cui ripristinare lo stock del prodotto.
+     * @throws Exception Se si verifica un'eccezione durante la rimozione del prodotto dal carrello.
+     */
     public void removeItemFromCartById(int id, Warehouse warehouse) throws Exception {
         // Verifica se il prodotto è presente nel carrello
         Product productToRemove = null;
