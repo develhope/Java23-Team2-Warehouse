@@ -58,12 +58,12 @@ public class Warehouse {
 
     public static void checkIfEmptyMap(Map<Product, Integer> originalMap) {
         if (originalMap.isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Non è stato trovato nessun elemento corrispondente.\n");
         }
         try {
             printFilteredElements(originalMap);
         } catch (IllegalArgumentException e) {
-            System.out.println("Non è stato trovato nessun elemento corrispondente.\n");
+            System.out.println(e.getMessage());
         }
     }
 
