@@ -117,13 +117,15 @@ public class Cart {
         }
 
         // Aggiunge il prodotto al carrello
-        int updatedQuantity = products.containsKey(productToAdd) ? products.get(productToAdd) + quantity : quantity;
-        products.put(productToAdd, updatedQuantity);
+        if (products.containsKey(productToAdd)) {
+            int updatedQuantity = products.get(productToAdd) + quantity;
+            products.put(productToAdd, updatedQuantity);
+        } else {
+            products.put(productToAdd, quantity);
+        }
 
         warehouse.removeProduct(productToAdd, quantity);
-
         updateTotalPrice();
-
         return this;
     }
 
