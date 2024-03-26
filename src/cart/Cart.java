@@ -1,4 +1,7 @@
-package classes;
+package cart;
+
+import product.Product;
+import warehouse.Warehouse;
 
 import java.util.Map;
 import java.util.HashMap;

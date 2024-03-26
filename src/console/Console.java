@@ -1,9 +1,12 @@
-package classes;
+package console;
+
+import product.Product;
+import warehouse.Warehouse;
 
 import java.util.Map;
 import java.util.Scanner;
 
-import static classes.Warehouse.*;
+import static warehouse.Warehouse.*;
 
 public class Console {
     public static void main(String[] args) {
