@@ -1,4 +1,4 @@
-package products;
+package classes;
 
 public enum KindOfProduct {
     TABLET,

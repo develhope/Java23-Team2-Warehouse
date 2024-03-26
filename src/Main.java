@@ -1,11 +1,9 @@
 
-import classes.Cart;
-import classes.Product;
-import classes.Warehouse;
-import products.KindOfProduct;
+import classes.*;
+
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
     }
 }

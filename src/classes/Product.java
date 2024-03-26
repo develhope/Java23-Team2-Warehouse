@@ -1,6 +1,5 @@
 package classes;
 
-import products.KindOfProduct;
 
 import java.util.Objects;
 

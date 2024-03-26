@@ -13,7 +13,7 @@ public class Console {
         scnWelcome(scanner, warehouse);
     }
 
-    public static products.KindOfProduct scnProductKindChoice(Scanner scanner) {
+    public static KindOfProduct scnProductKindChoice(Scanner scanner) {
 
         int input;
         do {
@@ -25,9 +25,9 @@ public class Console {
             }
         } while (input < 1 || input > 3);
         return switch (input) {
-            case 1 -> products.KindOfProduct.NOTEBOOK;
-            case 2 -> products.KindOfProduct.TABLET;
-            case 3 -> products.KindOfProduct.SMARTPHONE;
+            case 1 -> KindOfProduct.NOTEBOOK;
+            case 2 -> KindOfProduct.TABLET;
+            case 3 -> KindOfProduct.SMARTPHONE;
             default -> throw new IllegalStateException("Unexpected value: " + input);
         };
     }
@@ -211,7 +211,7 @@ public class Console {
 
     // Permette all'utente di inserire un prodotto a magazzino tramite un interfaccia da Terminale.
     public static void scnAddProdToWarehouse(Scanner scanner, Warehouse warehouse) {
-        products.KindOfProduct article = scnProductKindChoice(scanner);
+        KindOfProduct article = scnProductKindChoice(scanner);
         System.out.println("Produttore:");
         String producer = scanner.nextLine();
         System.out.println("Modello:");
