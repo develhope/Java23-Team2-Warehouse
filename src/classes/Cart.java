@@ -81,9 +81,13 @@ public class Cart {
 
     public void updateCartQuantity(Product product, int quantity, Warehouse warehouse) throws Exception {
         int availableQuantity = warehouse.checkStock(product);
-        // Controlla se la quantità richiesta è disponibile nel magazzino
         if (availableQuantity >= quantity) {
-            products.put(product, quantity);
+            if (products.containsKey(product)) {
+                products.put(product, quantity);
+            } else {
+                System.out.println("Il prodotto non è presente nel carrello. Impossibile aggiornare la quantità.");
+                return;
+            }
             updateTotalPrice();
             System.out.println("Prodotto aggiunto al carrello");
         } else {
@@ -91,9 +95,7 @@ public class Cart {
         }
     }
 
-    // Metodo per aggiungere un articolo al carrello tramite l'ID e aggiornare lo stock del magazzino
     public Cart addToCartById(int productId, int quantity, Warehouse warehouse) throws Exception {
-        // Trova il prodotto nel magazzino tramite l'ID
         Product productToAdd = null;
         for (Map.Entry<Product, Integer> entry : warehouse.getStock().entrySet()) {
             if (entry.getKey().getId() == productId) {
@@ -102,36 +104,32 @@ public class Cart {
             }
         }
 
-        // Verifica se il prodotto è stato trovato
         if (productToAdd == null) {
             System.out.println("Prodotto con ID " + productId + " non trovato nel magazzino.");
-            return this; // Restituisce il carrello attuale se il prodotto non è stato trovato
+            return this;
         }
 
         // Verifica se la quantità richiesta è disponibile nel magazzino
         int availableQuantity = warehouse.checkStock(productToAdd);
         if (availableQuantity < quantity) {
             System.out.println("Quantità richiesta non disponibile nel magazzino.");
-            return this; // Restituisce il carrello attuale se la quantità non è disponibile
+            return this;
         }
 
         // Aggiunge il prodotto al carrello
-        int updatedQuantity = products.getOrDefault(productToAdd, 0) + quantity;
+        int updatedQuantity = products.containsKey(productToAdd) ? products.get(productToAdd) + quantity : quantity;
         products.put(productToAdd, updatedQuantity);
 
-        // Aggiorna lo stock del magazzino
         warehouse.removeProduct(productToAdd, quantity);
 
-        // Ricalcola il prezzo totale
         updateTotalPrice();
 
-        // Restituisce il carrello aggiornato
         return this;
     }
 
     public void removeItemFromCartById(int id, Warehouse warehouse) throws Exception {
+        // Verifica se il prodotto è presente nel carrello
         Product productToRemove = null;
-
         for (Product product : products.keySet()) {
             if (product.getId() == id) {
                 productToRemove = product;
@@ -150,6 +148,5 @@ public class Cart {
             System.out.println("Prodotto non trovato nel carrello");
         }
     }
-
 
 }
