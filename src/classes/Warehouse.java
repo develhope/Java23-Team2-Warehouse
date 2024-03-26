@@ -167,5 +167,11 @@ public class Warehouse {
         warehouse.addProduct(new Product(products.KindOfProduct.TABLET, "Asus", "Pen", "tr", 2.3, 2, 400, 700), 8);
     }
 
+    public Integer add(Product product, int quantity) {
+        int currentQuantity = stock.getOrDefault(product, 0);
+        int updatedQuantity = currentQuantity + quantity;
+        stock.put(product, updatedQuantity);
+        return null;
+    }
 }
 
