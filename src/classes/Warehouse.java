@@ -16,6 +16,10 @@ public class Warehouse {
     }
     
 
+    public Map<Product, Integer> getStock() {
+        return stock;
+    }
+
     //Aggiunge una determinata quantità di un prodotto specificato al magazzino.
     public void addProduct(Product product, int quantity) {
         if (stock.containsKey(product)) {
@@ -54,7 +58,6 @@ public class Warehouse {
         }
     }
 
-
     public static void checkIfEmptyMap(Map<Product, Integer> originalMap) {
         if (originalMap.isEmpty()) {
             throw new IllegalArgumentException();
@@ -76,81 +79,81 @@ public class Warehouse {
         }
     }
 
-    public static Map<Product, Integer> researchKindOfProduct(Map<Product, Integer> warehouse, String input) {
+    public static Map<Product, Integer> researchKindOfProduct(Map<Product, Integer> stock, String input) {
         Map<Product, Integer> filteredMap = new HashMap<>();
-        for (Product item : warehouse.keySet()) {
+        for (Product item : stock.keySet()) {
             if (item.getArticle().equalsIgnoreCase(input)) {
-                filteredMap.put(item, warehouse.get(item));
+                filteredMap.put(item, stock.get(item));
             }
         }
         return filteredMap;
     }
 
-    public static Map<Product, Integer> researchProducer(Map<Product, Integer> warehouse, String input) {
+    public static Map<Product, Integer> researchProducer(Map<Product, Integer> stock, String input) {
         Map<Product, Integer> filteredMap = new HashMap<>();
-        for (Product item : warehouse.keySet()) {
+        for (Product item : stock.keySet()) {
             if (item.getProducer().equalsIgnoreCase(input)) {
-                filteredMap.put(item, warehouse.get(item));
+                filteredMap.put(item, stock.get(item));
             }
         }
         return filteredMap;
     }
 
-    public static Map<Product, Integer> researchModel(Map<Product, Integer> warehouse, String input) {
+    public static Map<Product, Integer> researchModel(Map<Product, Integer> stock, String input) {
         Map<Product, Integer> filteredMap = new HashMap<>();
-        for (Product item : warehouse.keySet()) {
+        for (Product item : stock.keySet()) {
             if (item.getModel().equalsIgnoreCase(input)) {
-                filteredMap.put(item, warehouse.get(item));
+                filteredMap.put(item, stock.get(item));
             }
         }
         return filteredMap;
     }
 
-    public static Map<Product, Integer> researchID(Map<Product, Integer> warehouse, int input) {
+    public static Map<Product, Integer> researchID(Map<Product, Integer> stock, int input) {
         Map<Product, Integer> filteredMap = new HashMap<>();
-        for (Product item : warehouse.keySet()) {
+        for (Product item : stock.keySet()) {
             if (item.getId() == input) {
-                filteredMap.put(item, warehouse.get(item));
+                filteredMap.put(item, stock.get(item));
             }
         }
         return filteredMap;
     }
 
-    public static Map<Product, Integer> researchSellPrice(Map<Product, Integer> warehouse, double input) {
+    public static Map<Product, Integer> researchSellPrice(Map<Product, Integer> stock, double input) {
         Map<Product, Integer> filteredMap = new HashMap<>();
-        for (Product item : warehouse.keySet()) {
+        for (Product item : stock.keySet()) {
             if (item.getSellPrice() == input) {
-                filteredMap.put(item, warehouse.get(item));
+                filteredMap.put(item, stock.get(item));
             }
         }
         return filteredMap;
     }
 
-    public static Map<Product, Integer> researchPurchasePrice(Map<Product, Integer> warehouse, double input) {
+    public static Map<Product, Integer> researchPurchasePrice(Map<Product, Integer> stock, double input) {
         Map<Product, Integer> filteredMap = new HashMap<>();
-        for (Product item : warehouse.keySet()) {
+        for (Product item : stock.keySet()) {
             if (item.getPurchasePrice() == input) {
-                filteredMap.put(item, warehouse.get(item));
+                filteredMap.put(item, stock.get(item));
             }
         }
         return filteredMap;
     }
 
-    public static Map<Product, Integer> researchPurchasePriceInRange(Map<Product, Integer> warehouse, double minLimit, double maxLimit) {
+    public static Map<Product, Integer> researchPurchasePriceInRange(Map<Product, Integer> stock, double minLimit, double maxLimit) {
         Map<Product, Integer> filteredMap = new HashMap<>();
-        for (Product item : warehouse.keySet()) {
+        for (Product item : stock.keySet()) {
             if (checkIfPriceIsInRange(maxLimit, minLimit, item.getPurchasePrice())) {
-                filteredMap.put(item, warehouse.get(item));
+                filteredMap.put(item, stock.get(item));
             }
         }
         return filteredMap;
     }
 
-    public static Map<Product, Integer> researchSellPriceInRange(Map<Product, Integer> warehouse, double minLimit, double maxLimit) {
+    public static Map<Product, Integer> researchSellPriceInRange(Map<Product, Integer> stock, double minLimit, double maxLimit) {
         Map<Product, Integer> filteredMap = new HashMap<>();
-        for (Product item : warehouse.keySet()) {
+        for (Product item : stock.keySet()) {
             if (checkIfPriceIsInRange(maxLimit, minLimit, item.getSellPrice())) {
-                filteredMap.put(item, warehouse.get(item));
+                filteredMap.put(item, stock.get(item));
             }
         }
         return filteredMap;
