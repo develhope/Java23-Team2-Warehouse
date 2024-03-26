@@ -16,9 +16,7 @@ public class Warehouse {
     }
     
 
-    public Map<Product, Integer> getStock() {
-        return stock;
-    }
+
 
     //Aggiunge una determinata quantità di un prodotto specificato al magazzino.
     public void addProduct(Product product, int quantity) {
