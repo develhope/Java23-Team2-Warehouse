@@ -25,18 +25,10 @@ public class Warehouse {
         return BigDecimal.ZERO;
     }
     // Calcola il prezzo medio di acquisto per prodotto del tipo specificato
-    BigDecimal averageCost = sumCost.divide(BigDecimal.valueOf(prodNum), 2, BigDecimal.ROUND_HALF_UP);
+    BigDecimal averageCost = sumCost.divide(BigDecimal.valueOf(prodNum));
     // Restituisce il prezzo medio di acquisto per prodotto
     return averageCost;
 }
-//    // Mappa dei prodotti nel magazzino
-//    private Map<Product, Integer> stock;
-//
-//    // Costruttore che inizializza la mappa dello stock
-//    public PurchasablePrice(Map<Product, Integer> stock) {
-//        this.stock = stock;
-//    }
-
     private Map<Product, Integer> stock;
 
     // Metodo per ottenere la mappa dello stock
