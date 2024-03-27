@@ -18,7 +18,6 @@ public class Warehouse {
 
         for (Product product : filteredMap.keySet()) {
             prodNum++;
-//            prodNum += filteredMap.get(product);
 
             sumCost = sumCost.add(BigDecimal.valueOf(product.getSellPrice()));
         }
@@ -26,8 +25,6 @@ public class Warehouse {
             return BigDecimal.ZERO;
         }
       return sumCost.divide(BigDecimal.valueOf(prodNum));
-
-        //return averageCost;
     }
 
     public interface Purchasable {
