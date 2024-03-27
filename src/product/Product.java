@@ -1,4 +1,4 @@
-package classes;
+package product;
 
 import products.KindOfProduct;
 
