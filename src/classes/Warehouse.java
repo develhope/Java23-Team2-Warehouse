@@ -1,27 +1,39 @@
 package classes;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Warehouse {
-    public static <Device extends Purchasable> double puchasbleMediumCost(List<Device> devices) {
-        double totalCost = 0;
-        //Calcolo di ogni dispositivo
-        for (Device device : devices) {
-            totalCost += device.getPurchasable();
+    public BigDecimal purchasablePrice(products.KindOfProduct products) {
+        if (products == null) {
+            throw new NullPointerException("Value can't be null");
         }
-        //Se il magazzino non è vuoto calcola la media
-        if (!devices.isEmpty()) {
-            return totalCost / devices.size();
-        } else {
-            return 0;//Altrimenti ritorna 0
+        BigDecimal sumCost = BigDecimal.ZERO;
+
+        int prodNum = 0;
+
+        Map<Product, Integer> filteredMap = Warehouse.researchKindOfProduct(stock, products.toString());
+
+        for (Product product : filteredMap.keySet()) {
+            prodNum++;
+//            prodNum += filteredMap.get(product);
+
+            sumCost = sumCost.add(BigDecimal.valueOf(product.getSellPrice()));
         }
+        if (prodNum == 0) {
+            return BigDecimal.ZERO;
+        }
+      return sumCost.divide(BigDecimal.valueOf(prodNum));
+
+        //return averageCost;
     }
 
     public interface Purchasable {
         double getPurchasable();
     }
+
     private Map<Product, Integer> stock;
 
     // Metodo per ottenere la mappa dello stock
@@ -32,7 +44,7 @@ public class Warehouse {
     public Warehouse() {
         this.stock = new HashMap<>();
     }
-    
+
 
     //Aggiunge una determinata quantità di un prodotto specificato al magazzino.
     public void addProduct(Product product, int quantity) {
@@ -178,12 +190,12 @@ public class Warehouse {
         warehouse.addProduct(new Product(products.KindOfProduct.NOTEBOOK, "Apple", "M1", "tr", 2.3, 2, 1000, 1250), 10);
         warehouse.addProduct(new Product(products.KindOfProduct.NOTEBOOK, "Apple", "M2", "tr", 2.3, 2, 1300, 1850), 6);
         warehouse.addProduct(new Product(products.KindOfProduct.NOTEBOOK, "Asus", "M234", "tr", 2.3, 2, 900, 1450), 8);
-        warehouse.addProduct(new Product(products.KindOfProduct.SMARTPHONE, "Apple", "XR", "tr", 2.3, 2, 250, 400), 10);
-        warehouse.addProduct(new Product(products.KindOfProduct.SMARTPHONE, "Huawei", "Pro2", "tr", 2.3, 2, 100, 200), 6);
-        warehouse.addProduct(new Product(products.KindOfProduct.SMARTPHONE, "Asus", "Pen", "tr", 2.3, 2, 150, 300), 8);
-        warehouse.addProduct(new Product(products.KindOfProduct.TABLET, "Apple", "Ipad", "tr", 2.3, 2, 1000, 1250), 10);
-        warehouse.addProduct(new Product(products.KindOfProduct.TABLET, "Huawei", "Fire", "tr", 2.3, 2, 300, 400), 6);
-        warehouse.addProduct(new Product(products.KindOfProduct.TABLET, "Asus", "Pen", "tr", 2.3, 2, 400, 700), 8);
+        warehouse.addProduct(new Product(products.KindOfProduct.SMARTPHONE, "Apple", "XR", "tr", 2.3, 2, 250, 1000), 10);
+        warehouse.addProduct(new Product(products.KindOfProduct.SMARTPHONE, "Huawei", "Pro2", "tr", 2.3, 2, 100, 1000), 5);
+        warehouse.addProduct(new Product(products.KindOfProduct.SMARTPHONE, "Asus", "Pen", "tr", 2.3, 2, 150, 1050), 5);
+        warehouse.addProduct(new Product(products.KindOfProduct.TABLET, "Apple", "Ipad", "tr", 2.3, 2, 1000, 1400), 10);
+        warehouse.addProduct(new Product(products.KindOfProduct.TABLET, "Huawei", "Fire", "tr", 2.3, 2, 300, 1000), 6);
+        warehouse.addProduct(new Product(products.KindOfProduct.TABLET, "Asus", "Pen", "tr", 2.3, 2, 400, 1200), 8);
     }
 
 }
