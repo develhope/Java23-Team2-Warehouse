@@ -3,11 +3,30 @@ package warehouse;
 import product.KindOfProduct;
 import product.Product;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Warehouse {
     private Map<Product, Integer> stock;
+
+    public BigDecimal purchasablePrice(KindOfProduct products) {
+        if (products == null) {
+            throw new NullPointerException("Value can't be null");
+        }
+        BigDecimal sumCost = BigDecimal.ZERO;
+        int prodNum = 0;
+        Map<Product, Integer> filteredMap = researchKindOfProduct(stock, products.toString());
+
+        for (Product product : filteredMap.keySet()) {
+            prodNum++;
+            sumCost = sumCost.add(BigDecimal.valueOf(product.getSellPrice()));
+        }
+        if (prodNum == 0) {
+            return BigDecimal.ZERO;
+        }
+        return sumCost.divide(BigDecimal.valueOf(prodNum));
+    }
 
     // Metodo per ottenere la mappa dello stock
     public Map<Product, Integer> getStock() {
@@ -17,8 +36,6 @@ public class Warehouse {
     public Warehouse() {
         this.stock = new HashMap<>();
     }
-    
-
 
 
     //Aggiunge una determinata quantità di un prodotto specificato al magazzino.
@@ -140,7 +157,8 @@ public class Warehouse {
         return filteredMap;
     }
 
-    public static Map<Product, Integer> researchPurchasePriceInRange(Map<Product, Integer> stock, double minLimit, double maxLimit) {
+    public static Map<Product, Integer> researchPurchasePriceInRange(Map<Product, Integer> stock,
+                                                                     double minLimit, double maxLimit) {
         Map<Product, Integer> filteredMap = new HashMap<>();
         for (Product item : stock.keySet()) {
             if (checkIfPriceIsInRange(maxLimit, minLimit, item.getPurchasePrice())) {
@@ -150,7 +168,8 @@ public class Warehouse {
         return filteredMap;
     }
 
-    public static Map<Product, Integer> researchSellPriceInRange(Map<Product, Integer> stock, double minLimit, double maxLimit) {
+    public static Map<Product, Integer> researchSellPriceInRange(Map<Product, Integer> stock, double minLimit,
+                                                                 double maxLimit) {
         Map<Product, Integer> filteredMap = new HashMap<>();
         for (Product item : stock.keySet()) {
             if (checkIfPriceIsInRange(maxLimit, minLimit, item.getSellPrice())) {
