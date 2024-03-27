@@ -1,9 +1,14 @@
 package Testers;
+import org.junit.Test;
+import product.KindOfProduct;
 import product.Product;
 import warehouse.Warehouse;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 public class WarehouseTest {
     @Test
@@ -47,8 +52,8 @@ public class WarehouseTest {
     public void purchasablePrice() {
         Warehouse warehouse = new Warehouse();
         Warehouse.fillUpWarehouse(warehouse);
-        BigDecimal result = warehouse.purchasablePrice(KindOfProduct.TABLET);
-        BigDecimal expected = BigDecimal.valueOf(1200.0);
+        BigDecimal result = warehouse.purchasablePrice(KindOfProduct.SMARTPHONE);
+        BigDecimal expected = BigDecimal.valueOf(300.0);
         assertEquals(expected, result);
     }
 }
