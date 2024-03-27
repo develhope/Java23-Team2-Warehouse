@@ -1,7 +1,7 @@
 package Testers;
 
-import classes.Product;
-import classes.Warehouse;
+import product.Product;
+import warehouse.Warehouse;
 import org.junit.Test;
 
 import java.util.HashMap;
