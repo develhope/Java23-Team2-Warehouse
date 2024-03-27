@@ -1,9 +1,42 @@
 package classes;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Warehouse {
+    public BigDecimal purchasablePrice(products.KindOfProduct products) {
+        if(products == null){
+           throw new NullPointerException("Value can't be null");
+        }
+    BigDecimal sumCost = BigDecimal.ZERO;
+    int prodNum = 0;
+
+    Map<Product, Integer> filteredMap = Warehouse.researchKindOfProduct(stock, products.toString());
+
+    for (Product product : filteredMap.keySet()) {
+
+        prodNum += filteredMap.get(product);
+
+        sumCost = sumCost.add(BigDecimal.valueOf(filteredMap.get(product)).multiply(BigDecimal.valueOf(product.getSellPrice())));
+    }
+    // Se non sono stati trovati prodotti del tipo specificato, restituisce zero
+    if (prodNum == 0) {
+        return BigDecimal.ZERO;
+    }
+    // Calcola il prezzo medio di acquisto per prodotto del tipo specificato
+    BigDecimal averageCost = sumCost.divide(BigDecimal.valueOf(prodNum), 2, BigDecimal.ROUND_HALF_UP);
+    // Restituisce il prezzo medio di acquisto per prodotto
+    return averageCost;
+}
+//    // Mappa dei prodotti nel magazzino
+//    private Map<Product, Integer> stock;
+//
+//    // Costruttore che inizializza la mappa dello stock
+//    public PurchasablePrice(Map<Product, Integer> stock) {
+//        this.stock = stock;
+//    }
+
     private Map<Product, Integer> stock;
 
     // Metodo per ottenere la mappa dello stock
@@ -13,11 +46,6 @@ public class Warehouse {
 
     public Warehouse() {
         this.stock = new HashMap<>();
-    }
-    
-
-    public Map<Product, Integer> getStock() {
-        return stock;
     }
 
     //Aggiunge una determinata quantità di un prodotto specificato al magazzino.
@@ -164,8 +192,8 @@ public class Warehouse {
         warehouse.addProduct(new Product(products.KindOfProduct.NOTEBOOK, "Apple", "M2", "tr", 2.3, 2, 1300, 1850), 6);
         warehouse.addProduct(new Product(products.KindOfProduct.NOTEBOOK, "Asus", "M234", "tr", 2.3, 2, 900, 1450), 8);
         warehouse.addProduct(new Product(products.KindOfProduct.SMARTPHONE, "Apple", "XR", "tr", 2.3, 2, 250, 400), 10);
-        warehouse.addProduct(new Product(products.KindOfProduct.SMARTPHONE, "Huawei", "Pro2", "tr", 2.3, 2, 100, 200), 6);
-        warehouse.addProduct(new Product(products.KindOfProduct.SMARTPHONE, "Asus", "Pen", "tr", 2.3, 2, 150, 300), 8);
+        warehouse.addProduct(new Product(products.KindOfProduct.SMARTPHONE, "Huawei", "Pro2", "tr", 2.3, 2, 100, 400), 6);
+        warehouse.addProduct(new Product(products.KindOfProduct.SMARTPHONE, "Asus", "Pen", "tr", 2.3, 2, 150, 400), 8);
         warehouse.addProduct(new Product(products.KindOfProduct.TABLET, "Apple", "Ipad", "tr", 2.3, 2, 1000, 1250), 10);
         warehouse.addProduct(new Product(products.KindOfProduct.TABLET, "Huawei", "Fire", "tr", 2.3, 2, 300, 400), 6);
         warehouse.addProduct(new Product(products.KindOfProduct.TABLET, "Asus", "Pen", "tr", 2.3, 2, 400, 700), 8);
